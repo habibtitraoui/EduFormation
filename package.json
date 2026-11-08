@@ -1,0 +1,56 @@
+{
+  "name": "eduformation-landing",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Marketing landing page for EduFormation — a corporate training video platform.",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run typecheck && npm run test && vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 4173",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "node scripts/check-conventions.mjs",
+    "verify": "npm run lint && npm run check && npm run build && npm run check && npm run check:metadata",
+    "og:generate": "node scripts/generate-og.mjs",
+    "test:browser": "node scripts/browser-check.mjs",
+    "test:form": "node scripts/form-check.mjs",
+    "test:performance": "node scripts/performance-check.mjs",
+    "audit:lighthouse": "node scripts/lighthouse-check.mjs",
+    "test:mailto": "node scripts/mailto-check.mjs",
+    "check:metadata": "node scripts/check-metadata.mjs"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.70.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwind-merge": "^3.7.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@eslint/js": "^9.39.5",
+    "@playwright/test": "^1.65.0",
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "chrome-launcher": "^1.2.3",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react-hooks": "^6.1.1",
+    "globals": "^16.5.0",
+    "lighthouse": "^13.6.0",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.1",
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  }
+}
