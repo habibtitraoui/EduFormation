@@ -1,0 +1,18 @@
+node_modules/
+dist/
+coverage/
+*.local
+
+# Environment is host-supplied. `.env.example` documents every variable.
+.env
+.env.*
+!.env.example
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.log
+
+.cache/
