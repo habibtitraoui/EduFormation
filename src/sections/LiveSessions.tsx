@@ -2,7 +2,6 @@ import { ArrowRight } from "lucide-react";
 
 import { SessionFigure } from "../components/figures/SessionFigure";
 import { SectionShell } from "../components/ui";
-import { appRoutes } from "../lib/config";
 import { useLocale } from "../lib/locale";
 
 export function LiveSessions() {
@@ -22,7 +21,7 @@ export function LiveSessions() {
               </li>
             ))}
           </ul>
-          <a href={appRoutes.liveEvents} className="mt-6 inline-flex items-center gap-2 rounded-control text-body-sm font-medium text-accent hover:underline">
+          <a href="#contact-form" className="mt-6 inline-flex items-center gap-2 rounded-control text-body-sm font-medium text-accent hover:underline">
             {t.live.openCta}<ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden="true" />
           </a>
         </div>

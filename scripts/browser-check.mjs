@@ -86,11 +86,7 @@ try {
     if (request.url().includes("NotoSansArabicVariable")) fontRequests.push(request.url());
   });
   await page.goto(baseUrl, { waitUntil: "networkidle" });
-  if (process.env.EXPECT_NO_CONTACT === "1") {
-    assert.equal(await page.locator('a[href^="mailto:"]').count(), 0);
-    assert.equal(await page.locator("#demo").count(), 0);
-    assert.equal(await page.getByRole("link", { name: "Request a demo" }).count(), 0);
-  }
+  assert.equal(await page.locator("#contact-form").count(), 1, "The contact form is present without an endpoint");
   await page.keyboard.press("Tab");
   assert.equal(await page.evaluate(() => document.activeElement?.getAttribute("href")), "#main", "Skip link must be first");
   await page.keyboard.press("Enter");
@@ -100,7 +96,7 @@ try {
   await menu.click();
   assert.equal(await menu.getAttribute("aria-expanded"), "true");
   await page.keyboard.press("Shift+Tab");
-  assert((await page.evaluate(() => document.activeElement?.getAttribute("href")))?.endsWith("/login"), "Menu should trap reverse Tab");
+  assert.equal(await page.evaluate(() => document.activeElement?.getAttribute("href")), "#contact-form", "Menu should trap reverse Tab");
   await page.keyboard.press("Tab");
   assert.equal(await page.evaluate(() => document.activeElement?.getAttribute("aria-expanded")), "true", "Menu should trap forward Tab");
 
@@ -174,7 +170,7 @@ try {
   assert.equal(beforeBundle.lang, "ar");
   assert.equal(beforeBundle.dir, "rtl");
   assert.equal(beforeBundle.dark, true, "Saved theme is applied before the bundle loads");
-  assert.match(beforeBundle.heading, /التدريب/);
+  assert.match(beforeBundle.heading, /تدريب يلائم فريقك/);
   releaseBundle();
   await earlyPage.waitForLoadState("networkidle");
   assert.equal(await earlyPage.evaluate(() => document.querySelector("#hero-title") === window.__earlyHeading), true,
@@ -184,10 +180,10 @@ try {
   const noJsContext = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 360, height: 900 } });
   const noJsPage = await noJsContext.newPage();
   await noJsPage.goto(baseUrl, { waitUntil: "load" });
-  assert.equal(await noJsPage.locator("html").getAttribute("lang"), "en");
-  assert.equal(await noJsPage.locator("html").getAttribute("dir"), "ltr");
+  assert.equal(await noJsPage.locator("html").getAttribute("lang"), "ar");
+  assert.equal(await noJsPage.locator("html").getAttribute("dir"), "rtl");
   assert.equal(await noJsPage.locator("main h1").count(), 1);
-  assert.match(await noJsPage.locator("main").innerText(), /Courses grouped into learning paths/);
+  assert.match(await noJsPage.locator("main").innerText(), /دورات منظّمة/);
   assert.equal(await noJsPage.locator("main section").count(), 11, "The static build should remain readable without JavaScript");
   assert.equal(await noJsPage.locator(".js-only:visible").count(), 0, "Inert JavaScript controls are hidden without JavaScript");
   await noJsContext.close();

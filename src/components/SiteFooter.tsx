@@ -1,10 +1,9 @@
 import { useId, useSyncExternalStore } from "react";
 
-import { appRoutes, contact } from "../lib/config";
+import { contact } from "../lib/config";
 import { cn } from "../lib/cn";
 import { fillTemplate, formatYear } from "../lib/format";
 import { useLocale } from "../lib/locale";
-import { demoTarget } from "../lib/navigation";
 
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
@@ -37,12 +36,9 @@ export function SiteFooter() {
   const { t, locale } = useLocale();
   const ids = useId();
   const year = useSyncExternalStore(subscribeYear, currentYear, buildYear);
-  const demo = demoTarget(t);
-  const showContact = contact.email !== null || contact.hasForm;
-
   const productLinks = [
-    { label: t.footer.courses, href: appRoutes.categories },
-    { label: t.nav.live, href: appRoutes.liveEvents },
+    { label: t.footer.courses, href: "#features" },
+    { label: t.nav.live, href: "#live" },
     { label: t.nav.certificates, href: "#certificates" },
     { label: t.nav.admin, href: "#admin" },
   ];
@@ -55,7 +51,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-line bg-canvas">
       <div className="mx-auto w-full max-w-page px-5 py-16 md:px-6 md:py-20 xl:px-8">
-        <div className={cn("grid gap-10", showContact ? "md:grid-cols-4" : "md:grid-cols-3")}>
+        <div className="grid gap-10 md:grid-cols-4">
           <div className="flex flex-col gap-4">
             <Wordmark />
             <p className="max-w-prose text-body-sm text-muted">{t.footer.tagline}</p>
@@ -95,29 +91,23 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          {showContact ? (
-            <nav aria-labelledby={`${ids}-contact`} className={contact.email === null ? "js-only" : undefined}>
-              <p id={`${ids}-contact`} className="text-label text-fg">
-                {t.footer.contact}
-              </p>
-              <ul className="mt-3 flex flex-col gap-2">
-                {contact.email !== null ? (
-                  <li>
-                    <a href={`mailto:${contact.email}`} className={cn(linkClass, "font-mono text-label")}>
-                      {contact.email}
-                    </a>
-                  </li>
-                ) : null}
-                {demo !== null ? (
-                  <li className={contact.hasForm ? "js-only" : undefined}>
-                    <a href={demo} className={linkClass}>
-                      {t.nav.requestDemo}
-                    </a>
-                  </li>
-                ) : null}
-              </ul>
-            </nav>
-          ) : null}
+          <nav aria-labelledby={`${ids}-contact`}>
+            <p id={`${ids}-contact`} className="text-label text-fg">
+              {t.footer.contact}
+            </p>
+            <ul className="mt-3 flex flex-col gap-2">
+              <li>
+                <a href={`mailto:${contact.email}`} className={cn(linkClass, "break-all font-mono text-label")}>
+                  {contact.email}
+                </a>
+              </li>
+              <li>
+                <a href="#contact-form" className={linkClass}>
+                  {t.nav.contact}
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
 
         <div className="mt-12 border-t border-line pt-6">

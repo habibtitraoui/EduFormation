@@ -1,13 +1,11 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  /** Base URL of the EduFormation application, no trailing slash. */
-  readonly VITE_APP_URL?: string;
   /** Canonical origin of this site, used for canonical / og:url. */
   readonly VITE_SITE_URL?: string;
-  /** [OWNER] contact channel for the demo call to action. */
+  /** Contact email destination. Defaults to the owner's published address. */
   readonly VITE_CONTACT_EMAIL?: string;
-  /** [OWNER] optional form endpoint (POST, JSON). Empty disables the form. */
+  /** Optional form endpoint accepting a JSON POST with name, email, and message. */
   readonly VITE_CONTACT_ENDPOINT?: string;
 }
 

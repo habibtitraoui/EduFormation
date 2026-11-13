@@ -6,9 +6,9 @@ import type { Copy } from "./types";
  */
 export const fr = {
   meta: {
-    title: "EduFormation — La formation interne, organisée et traçable.",
+    title: "H2D.dev — Des formations à l’image de votre marque.",
     description:
-      "Plateforme vidéo de formation interne : parcours, cours, suivi par apprenant, sessions en direct et certificats délivrés par le cours lui-même.",
+      "H2D.dev aide les académies et les entreprises à créer des formations personnalisées avec cours, sessions en direct, suivi et certificats.",
   },
 
   nav: {
@@ -18,9 +18,7 @@ export const fr = {
     live: "Sessions en direct",
     admin: "Administration",
     faq: "FAQ",
-    signIn: "Se connecter",
-    openPlatform: "Ouvrir la plateforme",
-    requestDemo: "Demander une démonstration",
+    contact: "Contacter H2D.dev",
     menu: "Ouvrir le menu de navigation",
     close: "Fermer le menu de navigation",
     skipToContent: "Aller au contenu",
@@ -28,13 +26,13 @@ export const fr = {
   },
 
   hero: {
-    eyebrow: "Formation et développement",
-    title: "La formation interne,",
-    highlight: "organisée et traçable.",
-    body: "Des cours regroupés en parcours, la progression de chaque apprenant, et un certificat délivré par le cours lui-même.",
-    ctaPrimary: "Ouvrir la plateforme",
-    ctaSecondary: "Demander une démonstration",
-    meta: "Fonctionne sur votre propre base de données et votre propre stockage objet.",
+    eyebrow: "H2D.dev · Formation et développement",
+    title: "Des formations pour votre équipe,",
+    highlight: "à l’image de votre marque.",
+    body: "J’aide les académies et les entreprises à créer une expérience de formation claire : cours structurés, sessions en direct, suivi des apprenants et certificats personnalisés.",
+    ctaPrimary: "M’envoyer un message",
+    ctaSecondary: "M’écrire par e-mail",
+    meta: "Parlez-moi de vos apprenants et je vous aiderai à trouver la bonne approche.",
     figureCaption: "Vue d'un cours. Maquette illustrative, pas une capture de données réelles.",
 
     figureCourse: "Présentation de l'entreprise",
@@ -132,7 +130,7 @@ export const fr = {
     chat: "Une messagerie, avec les questions épinglées et leurs réponses sur place",
     hands: "Des mains levées, pour que l'animateur voie qui souhaite parler",
     replay: "Un lien de rediffusion ajouté au même événement après la session",
-    openCta: "Ouvrir les sessions en direct",
+    openCta: "Me contacter pour les sessions en direct",
     caption: "Salle de session. Maquette illustrative.",
 
     mockBadge: "En direct",
@@ -223,14 +221,13 @@ export const fr = {
   },
 
   finalCta: {
-    title: "Rassemblez le programme de formation au même endroit",
-    body: "Des cours structurés, des sessions en direct et un historique de ce que chaque apprenant a terminé.",
-    primary: "Ouvrir la plateforme",
-    secondary: "Demander une démonstration",
+    title: "Parlons de vos besoins en formation",
+    body: "Présentez-moi votre équipe ou votre académie et je vous répondrai à l’adresse indiquée.",
+    primary: "Écrire un message",
   },
 
   footer: {
-    tagline: "La formation interne, sur votre propre infrastructure.",
+    tagline: "EduFormation, par H2D.dev.",
     product: "Produit",
     courses: "Cours",
     resources: "Ressources",
@@ -247,21 +244,21 @@ export const fr = {
 
   form: {
     name: "Nom",
-    email: "Adresse professionnelle",
-    company: "Entreprise",
-    submit: "Demander une démonstration",
+    email: "Adresse e-mail",
+    message: "Comment puis-je vous aider ?",
+    submit: "Envoyer le message",
     submitting: "Envoi en cours…",
-    success: "Merci — nous répondrons à {email}.",
+    success: "Merci — je vous répondrai à {email}.",
+    mailtoOpened: "Votre application de messagerie devrait s’ouvrir avec le message adressé à {email}. Envoyez-le pour terminer votre demande.",
     error: "L'envoi a échoué. Réessayez, ou écrivez à {email}.",
-    errorNoEmail: "L’envoi a échoué. Veuillez réessayer.",
     errorName: "Indiquez le nom auquel adresser la réponse.",
-    errorEmail: "Indiquez une adresse professionnelle, par exemple nom@entreprise.com.",
-    errorCompany: "Indiquez l'organisation pour laquelle vous faites la demande.",
+    errorEmail: "Indiquez une adresse e-mail valide, par exemple nom@exemple.fr.",
+    errorMessage: "Écrivez un court message pour m’expliquer votre demande.",
   },
 
   contact: {
-    mailtoSubject: "Demande de démonstration EduFormation",
-    mailtoBody: "Bonjour, nous souhaiterions une démonstration d'EduFormation. Notre organisation : ",
+    mailtoSubject: "Message depuis le site H2D.dev",
+    mailtoBody: "Bonjour,",
   },
 
   unit: {

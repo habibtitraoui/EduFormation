@@ -46,3 +46,19 @@ export function Input({ className, invalid = false, ...props }: InputProps) {
     />
   );
 }
+
+export type TextareaProps = ComponentProps<"textarea"> & { invalid?: boolean | undefined };
+
+export function Textarea({ className, invalid = false, ...props }: TextareaProps) {
+  return (
+    <textarea
+      className={cn(
+        "min-h-32 w-full rounded-control border bg-panel px-3 py-2 text-body-sm text-fg shadow-card",
+        "transition-colors duration-150 placeholder:text-muted",
+        invalid ? "border-danger" : "border-line",
+        className,
+      )}
+      {...props}
+    />
+  );
+}

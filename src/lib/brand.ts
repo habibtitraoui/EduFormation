@@ -1,6 +1,6 @@
 /**
- * The product's mark (§5.6). A proper noun: it is identical in every locale,
- * which is why it lives here rather than in the translation dictionaries.
+ * The owner's mark is identical in every locale, so it lives outside the
+ * translation dictionaries.
  */
-export const BRAND_NAME = "EduFormation";
-export const BRAND_MONOGRAM = "EF";
+export const BRAND_NAME = "H2D.dev";
+export const BRAND_MONOGRAM = "H2D";

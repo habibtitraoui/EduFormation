@@ -50,7 +50,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Tokens (§5.1) — the product's real values, copied, not redesigned.
+   Brand palette — charcoal surfaces, slate text, and electric blue.
    -------------------------------------------------------------------------- */
 
 :root {
@@ -73,10 +73,10 @@
   --ink: #11161d;
   --ink-fg: #ffffff;
 
-  --accent: #2453c4;
+  --accent: #2563eb;
   --accent-fg: #ffffff;
-  --accent-soft: #edf2fe;
-  --accent-ring: rgb(36 83 196 / 0.2);
+  --accent-soft: #eff6ff;
+  --accent-ring: rgb(37 99 235 / 0.2);
 
   /* Media surfaces: video chrome stays dark in both themes. */
   --media: #0d1117;
@@ -118,13 +118,26 @@ html[lang="ar"] {
   --ink: #ffffff;
   --ink-fg: #0b0e13;
 
-  --accent: #7ba2f5;
-  --accent-fg: #0b0e13;
-  --accent-soft: rgb(123 162 245 / 0.14);
-  --accent-ring: rgb(123 162 245 / 0.28);
+  --accent: #60a5fa;
+  --accent-fg: #ffffff;
+  --accent-soft: rgb(37 99 235 / 0.2);
+  --accent-ring: rgb(96 165 250 / 0.34);
 
-  --success: #3ecf8e;
-  --success-soft: rgb(62 207 142 / 0.14);
+  --canvas: #0b0f14;
+  --panel: #1a1f26;
+  --inset: #131820;
+  --line: #273140;
+  --line-strong: #3a4658;
+
+  --fg: #e5e7eb;
+  --muted: #94a3b8;
+  --subtle: #64748b;
+
+  --ink: #2563eb;
+  --ink-fg: #ffffff;
+
+  --success: #00d9a8;
+  --success-soft: rgb(0 217 168 / 0.14);
   --warning: #e5a44a;
   --warning-soft: rgb(229 164 74 / 0.15);
   --danger: #f27a72;
@@ -258,6 +271,19 @@ html[lang="ar"] {
     outline-offset: 2px;
   }
 
+  :where(
+    a[href],
+    button:not(:disabled),
+    summary,
+    [role="button"],
+    label[for],
+    input[type="checkbox"]:not(:disabled),
+    input[type="radio"]:not(:disabled),
+    select:not(:disabled)
+  ) {
+    cursor: pointer;
+  }
+
   ::selection {
     background-color: var(--accent-soft);
   }
@@ -276,6 +302,14 @@ html[lang="ar"] {
 }
 
 @layer components {
+  .hero-backdrop {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(ellipse at 76% 38%, rgb(37 99 235 / 0.18), transparent 34%),
+      radial-gradient(ellipse at 17% 83%, rgb(37 99 235 / 0.08), transparent 36%);
+  }
+
   /* FAQ disclosure (§7.9): the only thing that animates is the marker colour. */
   .faq-item > summary {
     list-style: none;

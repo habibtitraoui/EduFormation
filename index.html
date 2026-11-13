@@ -1,39 +1,39 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f7f8fa" />
-    <title>EduFormation — Corporate training, organised and trackable.</title>
-    <meta name="description" content="Corporate training video platform: learning paths, courses, per-learner progress, live sessions, and certificates issued by the course itself." />
+    <meta name="theme-color" content="#0b0f14" />
+    <title>H2D.dev — تدريب يحمل هوية مؤسستك.</title>
+    <meta name="description" content="تساعد H2D.dev الأكاديميات والشركات على تقديم تدريب يحمل هويتها، مع دورات منظّمة وجلسات مباشرة ومتابعة التقدّم وشهادات." />
     <link rel="canonical" href="%VITE_SITE_URL%/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preload" href="/src/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="EduFormation" />
-    <meta property="og:title" content="EduFormation — Corporate training, organised and trackable." />
-    <meta property="og:description" content="Corporate training video platform: learning paths, courses, per-learner progress, live sessions, and certificates issued by the course itself." />
+    <meta property="og:site_name" content="H2D.dev" />
+    <meta property="og:title" content="H2D.dev — تدريب يحمل هوية مؤسستك." />
+    <meta property="og:description" content="تساعد H2D.dev الأكاديميات والشركات على تقديم تدريب يحمل هويتها، مع دورات منظّمة وجلسات مباشرة ومتابعة التقدّم وشهادات." />
     <meta property="og:url" content="%VITE_SITE_URL%/" />
     <meta property="og:image" content="%VITE_SITE_URL%/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="EduFormation. Company training, organised and trackable." />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:image:alt" content="H2D.dev — تدريب يحمل هوية مؤسستك." />
+    <meta property="og:locale" content="ar_AR" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:locale:alternate" content="fr_FR" />
-    <meta property="og:locale:alternate" content="ar_AR" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="EduFormation — Corporate training, organised and trackable." />
-    <meta name="twitter:description" content="Corporate training video platform: learning paths, courses, per-learner progress, live sessions, and certificates issued by the course itself." />
+    <meta name="twitter:title" content="H2D.dev — تدريب يحمل هوية مؤسستك." />
+    <meta name="twitter:description" content="تساعد H2D.dev الأكاديميات والشركات على تقديم تدريب يحمل هويتها، مع دورات منظّمة وجلسات مباشرة ومتابعة التقدّم وشهادات." />
     <meta name="twitter:image" content="%VITE_SITE_URL%/og.png" />
-    <meta name="twitter:image:alt" content="EduFormation. Company training, organised and trackable." />
+    <meta name="twitter:image:alt" content="H2D.dev — تدريب يحمل هوية مؤسستك." />
 
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@graph": [
-          { "@type": "Organization", "name": "EduFormation", "url": "%VITE_SITE_URL%/", "logo": "%VITE_SITE_URL%/favicon.svg" },
-          { "@type": "SoftwareApplication", "name": "EduFormation", "url": "%VITE_SITE_URL%/", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "Corporate training video platform: learning paths, courses, per-learner progress, live sessions, and certificates issued by the course itself." }
+          { "@type": "Organization", "name": "H2D.dev", "url": "%VITE_SITE_URL%/", "logo": "%VITE_SITE_URL%/favicon.svg" },
+          { "@type": "SoftwareApplication", "name": "EduFormation", "url": "%VITE_SITE_URL%/", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "منصة تدريب تساعد الأكاديميات والشركات على تقديم دورات وجلسات مباشرة وشهادات تحمل هويتها." }
         ]
       }
     </script>
@@ -42,7 +42,7 @@
         try {
           var stored = localStorage.getItem("eduformation-landing-theme");
           var system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-          var resolved = stored === "light" || stored === "dark" ? stored : system;
+          var resolved = stored === "light" || stored === "dark" ? stored : stored === "system" ? system : "dark";
           if (resolved === "dark") document.documentElement.classList.add("dark");
           document.documentElement.style.colorScheme = resolved;
         } catch (e) {}
@@ -54,25 +54,17 @@
         root.classList.add("js");
         var stored = null;
         try { stored = localStorage.getItem("eduformation-landing-locale"); } catch (e) {}
-        var candidates = stored === "en" || stored === "fr" || stored === "ar"
-          ? [stored]
-          : (navigator.languages || [navigator.language]);
-        for (var i = 0; i < candidates.length; i++) {
-          var language = candidates[i].toLowerCase().split("-")[0];
-          if (language === "en" || language === "fr" || language === "ar") {
-            root.lang = language;
-            root.dir = language === "ar" ? "rtl" : "ltr";
-            break;
-          }
-        }
+        var language = stored === "en" || stored === "fr" || stored === "ar" ? stored : "ar";
+        root.lang = language;
+        root.dir = language === "ar" ? "rtl" : "ltr";
       })();
     </script>
   </head>
   <body>
     <div id="root">
       <main class="site-fallback">
-        <h1>EduFormation — Corporate training, organised and trackable.</h1>
-        <p>EduFormation is a corporate training video platform with learning paths, courses, per-learner progress, live sessions, and certificates issued when a course is completed.</p>
+        <h1>تدريب يلائم فريقك، ويحمل هويتك.</h1>
+        <p>تساعد H2D.dev الأكاديميات والشركات على تقديم تجربة تدريب واضحة مع دورات منظّمة وجلسات مباشرة ومتابعة للتقدّم وشهادات تحمل هويتهم.</p>
       </main>
     </div>
     <script type="module" src="/src/main.tsx"></script>

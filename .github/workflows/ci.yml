@@ -11,7 +11,6 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     env:
-      VITE_APP_URL: https://app.example.com
       VITE_SITE_URL: https://www.example.com
       VITE_CONTACT_EMAIL: ""
       VITE_CONTACT_ENDPOINT: ""
@@ -23,13 +22,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run verify
-      - name: Reject a build with no application URL
-        run: |
-          if VITE_APP_URL= npx vite build --mode staging > /tmp/missing-env.log 2>&1; then
-            echo "A build without VITE_APP_URL should fail"
-            exit 1
-          fi
-          grep -q VITE_APP_URL /tmp/missing-env.log
       - run: npx playwright install --with-deps chromium
       - name: Preview and audit the production build
         run: |
@@ -41,7 +33,7 @@ jobs:
             sleep 1
           done
           curl -fsS http://127.0.0.1:4173/ -o /dev/null
-          EXPECT_NO_CONTACT=1 npm run test:browser
+          npm run test:browser
           npm run test:performance
           npm run audit:lighthouse
       - name: Build and test the configured demo form
@@ -59,21 +51,6 @@ jobs:
           done
           curl -fsS http://127.0.0.1:4174/ -o /dev/null
           npm run test:form
-      - name: Test the form without an email fallback
-        env:
-          VITE_CONTACT_EMAIL: ""
-          VITE_CONTACT_ENDPOINT: /test-demo
-        run: |
-          npm run build -- --outDir .cache/no-email-dist
-          npm run preview -- --outDir .cache/no-email-dist --port 4176 > /tmp/no-email-preview.log 2>&1 &
-          pid=$!
-          trap 'kill "$pid" 2>/dev/null || true' EXIT
-          for i in {1..30}; do
-            if curl -fsS http://127.0.0.1:4176/ -o /dev/null; then break; fi
-            sleep 1
-          done
-          curl -fsS http://127.0.0.1:4176/ -o /dev/null
-          BASE_URL=http://127.0.0.1:4176 EXPECT_NO_EMAIL=1 npm run test:form
       - name: Build and test the mailto fallback
         env:
           VITE_CONTACT_EMAIL: contact@training.example

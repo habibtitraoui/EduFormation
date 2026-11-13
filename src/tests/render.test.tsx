@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import App from "../App";
 import { cn } from "../lib/cn";
+import { contact } from "../lib/config";
 import { fillTemplate, formatDuration, formatNumber } from "../lib/format";
 
 describe("static rendering", () => {
@@ -14,17 +15,21 @@ describe("static rendering", () => {
     expect(html).toContain('<main id="main"');
     expect(html).toContain("<header");
     expect(html).toContain("<footer");
-    const ids = ["hero", "capabilities", "structure", "features", "certificates", "live", "admin", "protection", "how", "faq", "get-started"];
+    const ids = ["hero", "capabilities", "structure", "features", "certificates", "live", "admin", "protection", "how", "faq", "contact"];
     const positions = ids.map((id) => html.indexOf(`<section id="${id}"`));
     expect(positions.every((position) => position >= 0)).toBe(true);
     expect(positions).toEqual([...positions].sort((a, b) => a - b));
+    expect(html).toContain("H2D.dev");
+    expect(html).toContain('href="#contact-form"');
+    expect(html).toContain(`href="mailto:${contact.email}"`);
   });
 
   it("renders formatted certificate specifications rather than template placeholders", () => {
-    expect(html).toContain("3508 px PNG (300 DPI)");
-    expect(html).toContain("297 × 210 mm");
-    expect(html).not.toContain("{pixels}");
-    expect(html).not.toContain("{dpi}");
+    const englishHtml = renderToStaticMarkup(<App initialLocale="en" />);
+    expect(englishHtml).toContain("3508 px PNG (300 DPI)");
+    expect(englishHtml).toContain("297 × 210 mm");
+    expect(englishHtml).not.toContain("{pixels}");
+    expect(englishHtml).not.toContain("{dpi}");
   });
 
   it("renders eight native, mutually exclusive FAQ disclosures", () => {

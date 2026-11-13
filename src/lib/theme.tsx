@@ -6,7 +6,7 @@ export type ResolvedTheme = "light" | "dark";
 const STORAGE_KEY = "eduformation-landing-theme";
 const CYCLE: readonly ThemeChoice[] = ["light", "dark", "system"];
 const listeners = new Set<() => void>();
-let memoryChoice: ThemeChoice = "system";
+let memoryChoice: ThemeChoice = "dark";
 
 type ThemeContextValue = {
   choice: ThemeChoice;
@@ -22,7 +22,7 @@ function isChoice(value: string | null): value is ThemeChoice {
 }
 
 function readStoredChoice(): ThemeChoice {
-  if (typeof window === "undefined") return "system";
+  if (typeof window === "undefined") return "dark";
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY);
     return isChoice(stored) ? stored : memoryChoice;
@@ -38,7 +38,7 @@ function readSystemTheme(): ResolvedTheme {
 
 /** The server and hydration render the same neutral icon; CSS was set in head. */
 function serverChoice(): ThemeChoice {
-  return "system";
+  return "dark";
 }
 
 function subscribeChoice(listener: () => void): () => void {

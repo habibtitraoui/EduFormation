@@ -1,6 +1,6 @@
 # EduFormation landing page
 
-A single, static marketing page for the EduFormation corporate training video platform. It describes implemented capabilities and their limits; it does not implement the application, authentication, billing, or a dashboard.
+A static brand landing page for H2D.dev and the EduFormation training platform. It describes the platform's capabilities and their limits; it does not implement the application, authentication, billing, or a dashboard.
 
 ## Stack and local development
 
@@ -24,18 +24,17 @@ All variables are read at **build time**. `.env.example` contains examples, not 
 
 | Variable | Purpose |
 | --- | --- |
-| `VITE_APP_URL` | Base URL of the existing application, without a trailing slash. Production builds fail if it is missing or invalid; the development default is `http://localhost:3000`. Replace it with your real app URL before deployment. |
 | `VITE_SITE_URL` | Canonical origin of this site, without a path. Required for production; used for canonical, Open Graph, JSON-LD, robots and sitemap URLs. |
-| `VITE_CONTACT_EMAIL` | **[OWNER]** Real contact address. With no endpoint, the demo CTA is a `mailto:` link. The example `contact@example.com` is deliberately treated as unset. |
-| `VITE_CONTACT_ENDPOINT` | **[OWNER]** Optional URL accepting a JSON `POST` containing `name`, `email`, and `company`. When set, the demo CTA points to the form; configure CORS if the endpoint is on another origin. |
+| `VITE_CONTACT_EMAIL` | Contact address used by the form's email fallback and direct email links. Defaults to `titraoui.habibe@gmail.com`. |
+| `VITE_CONTACT_ENDPOINT` | Optional URL accepting a JSON `POST` containing `name`, `email`, and `message`. When set, the contact form submits there; configure CORS if the endpoint is on another origin. |
 
-If neither real contact input is supplied, the demo actions and contact column are omitted rather than linking to a placeholder. A form failure is reported as a failure; the endpoint is responsible for delivering the request. No customer proof assets, privacy page, terms page, or external design-system URL were supplied, so none are fabricated.
+Without a contact endpoint, the form validates the visitor's details and opens a prefilled message in their email app. The visitor must send the message from that app; the website does not claim delivery. When an endpoint is configured, failures are reported as failures and the endpoint is responsible for delivering the inquiry. No Instagram profile was provided, so the page does not link to an unverified account.
 
-English, French and Arabic dictionaries are in `src/content/`. The browser language is used when supported, otherwise English; the switcher persists the choice and sets `lang`/`dir`. The theme defaults to system and is applied in the document head before paint. Both choices are stored locally and are not sent to a server.
+Arabic is the default language and the page sets `lang="ar"` and `dir="rtl"` before paint. English and French remain available through the language switcher. The switcher persists the choice; the charcoal-and-blue dark theme is the default and is applied in the document head before paint. Visitors can switch to light mode or follow their system preference. Both choices are stored locally and are not sent to a server.
 
 ## Static output and deployment
 
-Deploy `dist/` after setting the real application and site origins. A small build plugin pre-renders this **one route** in English, with inert French and Arabic templates selected before paint. React hydrates the matching markup; with JavaScript disabled the English page and its real links remain readable. This avoids waiting for the JavaScript bundle before displaying the page. The build also generates `robots.txt` and the single-URL `sitemap.xml` from `VITE_SITE_URL`; the files in `public/` are source templates, not deployment output. Serve HTML, CSS and JS with gzip or Brotli enabled.
+Deploy `dist/` after setting the canonical site origin. A small build plugin pre-renders this **one route** in Arabic, with inert English and French templates selected before paint. React hydrates the matching markup; with JavaScript disabled the Arabic page and its real links remain readable. This avoids waiting for the JavaScript bundle before displaying the page. The build also generates `robots.txt` and the single-URL `sitemap.xml` from `VITE_SITE_URL`; the files in `public/` are source templates, not deployment output. Serve HTML, CSS and JS with gzip or Brotli enabled.
 
 `vercel.json` supplies the SPA fallback, immutable asset caching, short HTML caching, and the requested security headers. Other static hosts need equivalent settings. The Open Graph image is generated from `scripts/og-card.html`; run `npm run og:generate` after installing Playwright's Chromium to regenerate it.
 

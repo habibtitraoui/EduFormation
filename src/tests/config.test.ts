@@ -2,7 +2,6 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 async function configuration(email: string, endpoint: string) {
   vi.resetModules();
-  vi.stubEnv("VITE_APP_URL", "https://training.example/");
   vi.stubEnv("VITE_CONTACT_EMAIL", email);
   vi.stubEnv("VITE_CONTACT_ENDPOINT", endpoint);
   return import("../lib/config");
@@ -14,28 +13,24 @@ afterEach(() => {
 });
 
 describe("owner-supplied contact configuration", () => {
-  it("does not publish the example address as a real contact", async () => {
-    const { contact, appRoutes } = await configuration("contact@example.com", "");
-    expect(contact.canRequestDemo).toBe(false);
-    expect(contact.email).toBeNull();
-    expect(appRoutes).toEqual({
-      login: "https://training.example/login",
-      categories: "https://training.example/categories",
-      liveEvents: "https://training.example/live-events",
-    });
+  it("uses the owner's email address when none is configured", async () => {
+    const { contact } = await configuration("", "");
+    expect(contact.email).toBe("titraoui.habibe@gmail.com");
+    expect(contact.endpoint).toBeNull();
   });
 
-  it("falls back to mailto when only a real address is supplied", async () => {
-    const { contact, demoMailto } = await configuration("contact@training.example", "");
-    expect(contact.hasMailto).toBe(true);
-    expect(contact.hasForm).toBe(false);
-    expect(demoMailto("Demo request", "Hello")).toContain("mailto:contact@training.example?subject=Demo+request");
+  it("supports an owner email override", async () => {
+    const { contact, contactMailto } = await configuration("contact@training.example", "");
+    expect(contact.email).toBe("contact@training.example");
+    expect(contact.endpoint).toBeNull();
+    expect(contactMailto("Website message", "Hello H2D.dev")).toBe(
+      "mailto:contact@training.example?subject=Website+message&body=Hello+H2D.dev",
+    );
   });
 
-  it("enables a form only when an endpoint exists, even without an email", async () => {
+  it("uses a configured endpoint for form submission", async () => {
     const { contact } = await configuration("", "/test-demo");
-    expect(contact.hasForm).toBe(true);
-    expect(contact.hasMailto).toBe(false);
-    expect(contact.email).toBeNull();
+    expect(contact.email).toBe("titraoui.habibe@gmail.com");
+    expect(contact.endpoint).toBe("/test-demo");
   });
 });

@@ -11,11 +11,9 @@ import { renderToString } from "react-dom/server";
 import { createServer, defineConfig, loadEnv, type Plugin, type ResolvedConfig } from "vite";
 
 /**
- * Environment variables that must exist for a production build.
- * A marketing page that quietly links to http://localhost:3000 is worse than
- * no page at all, so the build fails instead (§16).
+ * A production build needs the real canonical origin for its metadata.
  */
-const REQUIRED_FOR_PRODUCTION = ["VITE_APP_URL", "VITE_SITE_URL"] as const;
+const REQUIRED_FOR_PRODUCTION = ["VITE_SITE_URL"] as const;
 
 const DEV_DEFAULT_SITE_URL = "http://localhost:4173";
 
@@ -32,8 +30,7 @@ function environment(mode: string, isBuild: boolean): Record<string, string> {
     if (missing.length > 0) {
       throw new Error(
         `[eduformation-landing] Missing required environment variable(s): ${missing.join(", ")}. ` +
-          "Set them in your host's environment (see .env.example). Refusing to build a page " +
-          "whose call to action points at a development URL.",
+          "Set them in your host's environment (see .env.example).",
       );
     }
     for (const key of REQUIRED_FOR_PRODUCTION) {
@@ -108,7 +105,7 @@ function siteMetadata(siteUrl: string): Plugin {
 }
 
 /**
- * Pre-render this one route in all supported languages. English remains the
+ * Pre-render this one route in all supported languages. Arabic is the
  * crawler/no-JS default; the head's locale script selects an inert localized
  * template before paint. React hydrates that same markup when its bundle loads.
  * This keeps the content visible while JavaScript is still in transit.
@@ -136,8 +133,8 @@ function prerenderSinglePage(): Plugin {
           renderToString(createElement(StrictMode, null, createElement(App, { initialLocale })));
         const [english, french, arabic] = [render("en"), render("fr"), render("ar")];
         const localized = `
+    <template id="prerender-en">${english}</template>
     <template id="prerender-fr">${french}</template>
-    <template id="prerender-ar">${arabic}</template>
     <script>
       (function () {
         var root = document.getElementById("root");
@@ -147,7 +144,7 @@ function prerenderSinglePage(): Plugin {
         document.documentElement.dataset.localeReady = "true";
       })();
     </script>`;
-        const root = `<div id="root" data-prerendered="true" data-build-year="${new Date().getFullYear()}">${english}</div>${localized}`;
+        const root = `<div id="root" data-prerendered="true" data-build-year="${new Date().getFullYear()}">${arabic}</div>${localized}`;
         const htmlPath = resolve(config.root, config.build.outDir, "index.html");
         const html = await readFile(htmlPath, "utf8");
         const fallback = /<div id="root">[\s\S]*?<\/div>/;

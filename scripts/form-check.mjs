@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 import AxeBuilder from "@axe-core/playwright";
 import { chromium } from "@playwright/test";
 
-// Run against a build with VITE_CONTACT_ENDPOINT=/test-demo and either
-// VITE_CONTACT_EMAIL=contact@training.example or EXPECT_NO_EMAIL=1. Requests are intercepted locally.
+// Run against a build with VITE_CONTACT_ENDPOINT=/test-demo and
+// VITE_CONTACT_EMAIL=contact@training.example. Requests are intercepted locally.
 const baseUrl = process.env.BASE_URL || "http://127.0.0.1:4174";
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined, headless: true });
 
@@ -24,11 +24,11 @@ try {
   });
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto(baseUrl, { waitUntil: "networkidle" });
-  const form = page.locator("#demo form");
+  const form = page.locator("#contact-form form");
   const submit = form.locator('button[type="submit"]');
   await submit.click();
   assert.equal(await form.getByRole("alert").count(), 3, "Required fields should have error messages");
-  const inputs = await form.locator("input").evaluateAll((elements) => elements.map((element) => ({
+  const inputs = await form.locator("input, textarea").evaluateAll((elements) => elements.map((element) => ({
     id: element.id,
     invalid: element.getAttribute("aria-invalid"),
     describedBy: element.getAttribute("aria-describedby"),
@@ -47,11 +47,11 @@ try {
   await footer.getByRole("button", { name: "English" }).click();
 
   await form.getByLabel("Name", { exact: true }).fill(" Jane ");
-  await form.getByLabel("Work email").fill("not-an-email");
-  await form.getByLabel("Company").fill(" Example ");
+  await form.getByLabel("Email address").fill("not-an-email");
+  await form.getByLabel("How can I help?").fill("I would like to discuss a training platform.");
   await submit.click();
   assert.equal(await form.getByRole("alert").count(), 1, "Invalid email should be rejected");
-  await form.getByLabel("Work email").fill("jane@example.org");
+  await form.getByLabel("Email address").fill("jane@example.org");
 
   let release;
   const gate = new Promise((resolve) => { release = resolve; });
@@ -70,18 +70,17 @@ try {
   await error.waitFor();
   const errorText = await error.innerText();
   assert.match(errorText, /That did not send/);
-  if (process.env.EXPECT_NO_EMAIL === "1") {
-    assert.match(errorText, /Please try again\./);
-    assert.equal(await page.locator('a[href^="mailto:"]').count(), 0);
-  } else {
-    assert.match(errorText, /contact@training\.example/);
-  }
-  assert.deepEqual(body, { name: "Jane", email: "jane@example.org", company: "Example" });
-  assert.equal(await page.locator("#demo [role=status]").count(), 0, "A failed request must not report success");
+  assert.match(errorText, /contact@training\.example/);
+  assert.deepEqual(body, {
+    name: "Jane",
+    email: "jane@example.org",
+    message: "I would like to discuss a training platform.",
+  });
+  assert.equal(await page.locator("#contact-form [role=status]").count(), 0, "A failed request must not report success");
   await page.unroute("**/test-demo");
   await page.route("**/test-demo", (route) => route.fulfill({ status: 200, contentType: "application/json", body: "{}" }));
   await submit.click();
-  const success = page.locator("#demo [role=status]");
+  const success = page.locator("#contact-form [role=status]");
   await success.waitFor();
   assert.match(await success.innerText(), /reply to jane@example\.org/i);
   assert.equal(await form.count(), 0);

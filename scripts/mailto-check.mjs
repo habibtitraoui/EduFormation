@@ -2,40 +2,32 @@ import assert from "node:assert/strict";
 
 import { chromium } from "@playwright/test";
 
-// Run against a build with VITE_CONTACT_EMAIL=contact@training.example and an
-// empty VITE_CONTACT_ENDPOINT. No request to a mail server is made.
+// Run against a build with an empty VITE_CONTACT_ENDPOINT and a configured
+// VITE_CONTACT_EMAIL. The form opens a prefilled message in the visitor's app.
 const baseUrl = process.env.BASE_URL || "http://127.0.0.1:4175";
+const contactEmail = process.env.VITE_CONTACT_EMAIL || "titraoui.habibe@gmail.com";
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined, headless: true });
+
 try {
-  const context = await browser.newContext({
-    viewport: { width: 360, height: 900 },
-    storageState: {
-      cookies: [],
-      origins: [{ origin: new URL(baseUrl).origin, localStorage: [{ name: "eduformation-landing-locale", value: "en" }] }],
-    },
-  });
-  const page = await context.newPage();
+  const page = await browser.newPage({ viewport: { width: 360, height: 900 } });
   const errors = [];
   page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
   page.on("pageerror", (error) => errors.push(error.message));
+
   await page.goto(baseUrl, { waitUntil: "networkidle" });
-  const hero = page.locator("#hero").getByRole("link", { name: "Request a demo" });
-  const final = page.locator("#get-started").getByRole("link", { name: "Request a demo" });
-  const href = await hero.getAttribute("href");
-  assert(href?.startsWith("mailto:contact@training.example?"));
-  assert.equal(await final.getAttribute("href"), href, "Both CTAs use the same destination");
-  const mailto = new URL(href);
-  assert.equal(mailto.searchParams.get("subject"), "EduFormation demo request");
-  assert(mailto.searchParams.get("body")?.includes("EduFormation"));
-  assert.equal(await page.locator("#demo").count(), 0, "No form is rendered without an endpoint");
-  assert.equal(await page.locator('footer a[href="mailto:contact@training.example"]').count(), 1);
-  await page.locator("footer").getByRole("button", { name: "Language: English" }).click();
-  await page.locator("footer").getByRole("button", { name: "Français" }).click();
-  const frenchHref = await page.locator("#hero").getByRole("link", { name: "Demander une démonstration" }).getAttribute("href");
-  assert.equal(new URL(frenchHref).searchParams.get("subject"), "Demande de démonstration EduFormation");
+  assert.equal(await page.locator("html").getAttribute("lang"), "ar");
+  assert.equal(await page.locator("html").getAttribute("dir"), "rtl");
+  assert.equal(await page.locator("#contact-form form").count(), 1, "The contact form exists without a POST endpoint");
+  const emailLink = page.locator("#contact").getByRole("link", { name: contactEmail });
+  assert.equal(await emailLink.getAttribute("href"), `mailto:${contactEmail}`);
+
+  await page.locator("footer").getByRole("button", { name: "اللغة: العربية" }).click();
+  await page.locator("footer").getByRole("button", { name: "English" }).click();
+  assert.equal(await page.locator("html").getAttribute("lang"), "en");
+  assert.equal(await page.locator("#contact-form form").getByLabel("How can I help?").count(), 1);
+  assert.equal(await page.locator("#hero").getByRole("link", { name: "Send me a message" }).getAttribute("href"), "#contact-form");
   assert.deepEqual(errors, [], "No runtime or hydration errors");
-  await context.close();
-  console.log("Mailto fallback checks passed: consistent targets, localized subject, no form.");
+  console.log("Contact fallback checks passed: Arabic default, form availability, and direct email destination.");
 } finally {
   await browser.close();
 }

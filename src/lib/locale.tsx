@@ -15,16 +15,6 @@ const STORAGE_KEY = "eduformation-landing-locale";
 
 const DICTIONARIES: Record<Locale, Copy> = { en, fr, ar };
 
-function detectLocale(): Locale {
-  if (typeof navigator === "undefined") return "en";
-  const candidates = navigator.languages ?? [navigator.language];
-  for (const candidate of candidates) {
-    const [primary] = candidate.toLowerCase().split("-");
-    if (isLocale(primary)) return primary;
-  }
-  return "en";
-}
-
 function readStoredLocale(): Locale | null {
   if (typeof window === "undefined") return null;
   try {
@@ -48,7 +38,7 @@ type LocaleContextValue = {
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
 export function LocaleProvider({ children, initialLocale }: { children: ReactNode; initialLocale?: Locale }) {
-  const [locale, setLocaleState] = useState<Locale>(() => initialLocale ?? readStoredLocale() ?? detectLocale());
+  const [locale, setLocaleState] = useState<Locale>(() => initialLocale ?? readStoredLocale() ?? "ar");
 
   const direction = LOCALE_DIRECTION[locale];
   const t = DICTIONARIES[locale];

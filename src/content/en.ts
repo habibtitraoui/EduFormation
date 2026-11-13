@@ -8,9 +8,9 @@
  */
 export const en = {
   meta: {
-    title: "EduFormation — Corporate training, organised and trackable.",
+    title: "H2D.dev — Branded training for teams and academies.",
     description:
-      "Corporate training video platform: learning paths, courses, per-learner progress, live sessions, and certificates issued by the course itself.",
+      "H2D.dev helps academies and companies create branded training with structured courses, live sessions, learner progress, and certificates.",
   },
 
   nav: {
@@ -20,9 +20,7 @@ export const en = {
     live: "Live sessions",
     admin: "Administration",
     faq: "FAQ",
-    signIn: "Sign in",
-    openPlatform: "Open the platform",
-    requestDemo: "Request a demo",
+    contact: "Contact H2D.dev",
     menu: "Open navigation menu",
     close: "Close navigation menu",
     skipToContent: "Skip to content",
@@ -30,13 +28,13 @@ export const en = {
   },
 
   hero: {
-    eyebrow: "Learning and development",
-    title: "Company training,",
-    highlight: "organised and trackable.",
-    body: "Courses grouped into learning paths, progress for every learner, and a certificate issued by the course itself.",
-    ctaPrimary: "Open the platform",
-    ctaSecondary: "Request a demo",
-    meta: "Runs on your own database and object storage.",
+    eyebrow: "H2D.dev · Learning and development",
+    title: "Training for your team,",
+    highlight: "built around your brand.",
+    body: "I help academies and companies create a clear training experience with structured courses, live sessions, learner progress, and branded certificates.",
+    ctaPrimary: "Send me a message",
+    ctaSecondary: "Email me",
+    meta: "Tell me what your learners need. I’ll help you find the right approach.",
     figureCaption: "Course view. Illustrative layout, not a screenshot of live data.",
 
     /* Illustrative course mock */
@@ -135,7 +133,7 @@ export const en = {
     chat: "Chat, with questions pinned and answered in place",
     hands: "Raised hands, so a host sees who wants to speak",
     replay: "A replay link added to the same event afterwards",
-    openCta: "Open live sessions",
+    openCta: "Ask me about live sessions",
     caption: "Session room. Illustrative layout.",
 
     /* Illustrative session-room mock */
@@ -226,14 +224,13 @@ export const en = {
   },
 
   finalCta: {
-    title: "Bring the training programme into one place",
-    body: "Structured courses, live sessions and a record of what each learner completed.",
-    primary: "Open the platform",
-    secondary: "Request a demo",
+    title: "Let’s talk about your training needs",
+    body: "Share a little about your team or academy, and I’ll get back to you at the email address you provide.",
+    primary: "Write a message",
   },
 
   footer: {
-    tagline: "Corporate training, on your own infrastructure.",
+    tagline: "EduFormation, by H2D.dev.",
     product: "Product",
     courses: "Courses",
     resources: "Resources",
@@ -250,21 +247,21 @@ export const en = {
 
   form: {
     name: "Name",
-    email: "Work email",
-    company: "Company",
-    submit: "Request a demo",
+    email: "Email address",
+    message: "How can I help?",
+    submit: "Send message",
     submitting: "Sending…",
-    success: "Thanks — we will reply to {email}.",
+    success: "Thanks — I’ll reply to {email}.",
+    mailtoOpened: "Your email app should open with the message addressed to {email}. Send it there to complete your inquiry.",
     error: "That did not send. Try again, or email {email}.",
-    errorNoEmail: "That did not send. Please try again.",
     errorName: "Enter the name we should address the reply to.",
-    errorEmail: "Enter a work email address, for example name@company.com.",
-    errorCompany: "Enter the organisation you are asking for.",
+    errorEmail: "Enter a valid email address, for example name@example.com.",
+    errorMessage: "Write a short message so I know how to help.",
   },
 
   contact: {
-    mailtoSubject: "EduFormation demo request",
-    mailtoBody: "Hello, we would like a demonstration of EduFormation. Our organisation: ",
+    mailtoSubject: "Website inquiry for H2D.dev",
+    mailtoBody: "Hello,",
   },
 
   unit: {

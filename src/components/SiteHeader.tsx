@@ -1,4 +1,3 @@
-import { appRoutes } from "../lib/config";
 import { useLocale } from "../lib/locale";
 import { sectionNav } from "../lib/navigation";
 
@@ -36,8 +35,8 @@ export function SiteHeader() {
         <div className="ms-auto flex items-center gap-2">
           <LocaleSwitcher className="hidden md:block" />
           <ThemeToggle />
-          <ButtonLink href={appRoutes.login} variant="secondary" size="sm" className="hidden xl:inline-flex">
-            {t.nav.signIn}
+          <ButtonLink href="#contact-form" variant="secondary" size="sm" className="hidden xl:inline-flex">
+            {t.nav.contact}
           </ButtonLink>
           <MobileMenu />
         </div>

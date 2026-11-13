@@ -9,7 +9,7 @@ const root = document.getElementById("root");
 if (root === null) throw new Error("Missing #root element.");
 
 const language = document.documentElement.lang;
-const initialLocale = isLocale(language) ? language : "en";
+const initialLocale = isLocale(language) ? language : "ar";
 const app = <StrictMode><App initialLocale={initialLocale} /></StrictMode>;
 
 if (root.dataset.prerendered === "true") {

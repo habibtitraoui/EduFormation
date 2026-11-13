@@ -1,11 +1,10 @@
 import { Menu, X } from "lucide-react";
 import { useId, type MouseEvent } from "react";
 
-import { appRoutes } from "../lib/config";
 import { cn } from "../lib/cn";
 import { useDisclosure } from "../lib/disclosure";
 import { useLocale } from "../lib/locale";
-import { demoTarget, sectionNav } from "../lib/navigation";
+import { sectionNav } from "../lib/navigation";
 
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
@@ -20,7 +19,6 @@ export function MobileMenu({ className }: { className?: string | undefined }) {
   const { t } = useLocale();
   const { isOpen, toggle, hide, containerRef, triggerRef } = useDisclosure({ trapFocus: true, focusOnOpen: true });
   const panelId = useId();
-  const demo = demoTarget(t);
 
   /** Focus the section itself so keyboard context survives the closed panel. */
   function onNavigate(event: MouseEvent<HTMLAnchorElement>) {
@@ -85,14 +83,9 @@ export function MobileMenu({ className }: { className?: string | undefined }) {
           </div>
 
           <div className="mt-3 flex flex-col gap-2">
-            <ButtonLink href={appRoutes.login} size="sm" onClick={() => hide(false)}>
-              {t.nav.openPlatform}
+            <ButtonLink href="#contact-form" size="sm" onClick={() => hide(false)}>
+              {t.nav.contact}
             </ButtonLink>
-            {demo !== null ? (
-              <ButtonLink href={demo} variant="secondary" size="sm" onClick={() => hide(false)}>
-                {t.nav.requestDemo}
-              </ButtonLink>
-            ) : null}
           </div>
         </div>
       ) : null}
