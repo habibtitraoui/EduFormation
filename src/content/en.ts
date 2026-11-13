@@ -8,9 +8,9 @@
  */
 export const en = {
   meta: {
-    title: "H2D.dev — Branded training for teams and academies.",
+    title: "EduFormation — Your own branded training platform | H2D.dev",
     description:
-      "H2D.dev helps academies and companies create branded training with structured courses, live sessions, learner progress, and certificates.",
+      "Your own EduFormation platform, customized with your brand, courses, live sessions, learner tracking, and certificates.",
   },
 
   nav: {
@@ -29,12 +29,12 @@ export const en = {
 
   hero: {
     eyebrow: "H2D.dev · Learning and development",
-    title: "Training for your team,",
-    highlight: "built around your brand.",
-    body: "I help academies and companies create a clear training experience with structured courses, live sessions, learner progress, and branded certificates.",
-    ctaPrimary: "Send me a message",
-    ctaSecondary: "Email me",
-    meta: "Tell me what your learners need. I’ll help you find the right approach.",
+    title: "Your own training platform,",
+    highlight: "built for your organization.",
+    body: "We build each academy or company its own customized EduFormation platform, tailored to its brand and training needs, with courses, live sessions, learner progress, and certificates.",
+    ctaPrimary: "Request a demo",
+    ctaSecondary: "Email us",
+    meta: "See how your own EduFormation platform could work for your organization.",
     figureCaption: "Course view. Illustrative layout, not a screenshot of live data.",
 
     /* Illustrative course mock */
@@ -205,8 +205,8 @@ export const en = {
 
   faq: {
     title: "Questions worth asking",
-    q1: "Is this something we host, or a service we subscribe to?",
-    a1: "You deploy the application with your own PostgreSQL database and S3-compatible bucket. Sign-in is by account an administrator creates; there is no self-service signup.",
+    q1: "Do we get our own customized platform?",
+    a1: "Yes. Each academy or company gets its own EduFormation platform, customized for its brand and training needs, with its own courses, learners, and administration.",
     q2: "Which languages does it support?",
     a2: "English, French and Arabic, with right-to-left layouts. Every screen, including administration, uses the same three-language dictionary.",
     q3: "Can we limit which courses a learner sees?",
@@ -224,13 +224,13 @@ export const en = {
   },
 
   finalCta: {
-    title: "Let’s talk about your training needs",
-    body: "Share a little about your team or academy, and I’ll get back to you at the email address you provide.",
-    primary: "Write a message",
+    title: "Request a demo of your platform",
+    body: "Tell us about your academy or company. We’ll show you how EduFormation can be customized for your brand, learners, and training goals.",
+    primary: "Request a demo",
   },
 
   footer: {
-    tagline: "EduFormation, by H2D.dev.",
+    tagline: "A customized EduFormation platform for every client.",
     product: "Product",
     courses: "Courses",
     resources: "Resources",
@@ -248,20 +248,20 @@ export const en = {
   form: {
     name: "Name",
     email: "Email address",
-    message: "How can I help?",
-    submit: "Send message",
+    message: "What would you like to see in your demo?",
+    submit: "Send demo request",
     submitting: "Sending…",
-    success: "Thanks — I’ll reply to {email}.",
+    success: "Thanks — we’ll reply to {email} about your demo request.",
     mailtoOpened: "Your email app should open with the message addressed to {email}. Send it there to complete your inquiry.",
     error: "That did not send. Try again, or email {email}.",
     errorName: "Enter the name we should address the reply to.",
     errorEmail: "Enter a valid email address, for example name@example.com.",
-    errorMessage: "Write a short message so I know how to help.",
+    errorMessage: "Tell us a little about your organization or training needs.",
   },
 
   contact: {
-    mailtoSubject: "Website inquiry for H2D.dev",
-    mailtoBody: "Hello,",
+    mailtoSubject: "EduFormation demo request",
+    mailtoBody: "Hello, I’m interested in a customized EduFormation platform for my organization.",
   },
 
   unit: {

@@ -48,7 +48,7 @@ try {
 
   await form.getByLabel("Name", { exact: true }).fill(" Jane ");
   await form.getByLabel("Email address").fill("not-an-email");
-  await form.getByLabel("How can I help?").fill("I would like to discuss a training platform.");
+  await form.getByLabel("What would you like to see in your demo?").fill("I would like a platform customized for my academy.");
   await submit.click();
   assert.equal(await form.getByRole("alert").count(), 1, "Invalid email should be rejected");
   await form.getByLabel("Email address").fill("jane@example.org");
@@ -74,7 +74,7 @@ try {
   assert.deepEqual(body, {
     name: "Jane",
     email: "jane@example.org",
-    message: "I would like to discuss a training platform.",
+    message: "I would like a platform customized for my academy.",
   });
   assert.equal(await page.locator("#contact-form [role=status]").count(), 0, "A failed request must not report success");
   await page.unroute("**/test-demo");
@@ -82,7 +82,7 @@ try {
   await submit.click();
   const success = page.locator("#contact-form [role=status]");
   await success.waitFor();
-  assert.match(await success.innerText(), /reply to jane@example\.org/i);
+  assert.match(await success.innerText(), /reply to jane@example\.org.*demo request/i);
   assert.equal(await form.count(), 0);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth), 360);
   assert.deepEqual(errors, [], "No unexpected runtime or hydration errors");

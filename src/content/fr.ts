@@ -6,9 +6,9 @@ import type { Copy } from "./types";
  */
 export const fr = {
   meta: {
-    title: "H2D.dev — Des formations à l’image de votre marque.",
+    title: "EduFormation — Votre plateforme de formation | H2D.dev",
     description:
-      "H2D.dev aide les académies et les entreprises à créer des formations personnalisées avec cours, sessions en direct, suivi et certificats.",
+      "Obtenez votre plateforme EduFormation personnalisée pour votre académie ou entreprise, avec votre marque, des cours, des sessions en direct, un suivi et des certificats.",
   },
 
   nav: {
@@ -27,12 +27,12 @@ export const fr = {
 
   hero: {
     eyebrow: "H2D.dev · Formation et développement",
-    title: "Des formations pour votre équipe,",
-    highlight: "à l’image de votre marque.",
-    body: "J’aide les académies et les entreprises à créer une expérience de formation claire : cours structurés, sessions en direct, suivi des apprenants et certificats personnalisés.",
-    ctaPrimary: "M’envoyer un message",
-    ctaSecondary: "M’écrire par e-mail",
-    meta: "Parlez-moi de vos apprenants et je vous aiderai à trouver la bonne approche.",
+    title: "Votre propre plateforme de formation,",
+    highlight: "conçue pour votre organisation.",
+    body: "Nous créons pour chaque académie ou entreprise sa propre plateforme EduFormation personnalisée, adaptée à sa marque et à ses besoins : cours, sessions en direct, suivi des apprenants et certificats.",
+    ctaPrimary: "Demander une démonstration",
+    ctaSecondary: "Nous écrire",
+    meta: "Découvrez EduFormation adapté à votre organisation.",
     figureCaption: "Vue d'un cours. Maquette illustrative, pas une capture de données réelles.",
 
     figureCourse: "Présentation de l'entreprise",
@@ -202,8 +202,8 @@ export const fr = {
 
   faq: {
     title: "Les questions qui méritent d'être posées",
-    q1: "Est-ce une solution que nous hébergeons, ou un service auquel nous nous abonnons ?",
-    a1: "Vous déployez l'application avec votre propre base de données PostgreSQL et votre propre stockage compatible S3. La connexion se fait avec un compte créé par un administrateur ; il n'y a pas d'inscription autonome.",
+    q1: "Avons-nous notre propre plateforme personnalisée ?",
+    a1: "Oui. Chaque académie ou entreprise dispose de sa propre plateforme EduFormation, personnalisée selon sa marque et ses besoins, avec ses cours, ses apprenants et son espace d’administration.",
     q2: "Quelles langues sont prises en charge ?",
     a2: "Anglais, français et arabe, avec des dispositions de droite à gauche. Chaque écran, administration comprise, utilise le même dictionnaire trilingue.",
     q3: "Pouvons-nous limiter les cours visibles par un apprenant ?",
@@ -221,13 +221,13 @@ export const fr = {
   },
 
   finalCta: {
-    title: "Parlons de vos besoins en formation",
-    body: "Présentez-moi votre équipe ou votre académie et je vous répondrai à l’adresse indiquée.",
-    primary: "Écrire un message",
+    title: "Demandez une démonstration de votre plateforme",
+    body: "Présentez votre académie ou votre entreprise. Nous vous montrerons comment adapter EduFormation à votre marque, à vos apprenants et à vos objectifs.",
+    primary: "Demander une démonstration",
   },
 
   footer: {
-    tagline: "EduFormation, par H2D.dev.",
+    tagline: "Une plateforme EduFormation personnalisée pour chaque client.",
     product: "Produit",
     courses: "Cours",
     resources: "Ressources",
@@ -245,20 +245,20 @@ export const fr = {
   form: {
     name: "Nom",
     email: "Adresse e-mail",
-    message: "Comment puis-je vous aider ?",
-    submit: "Envoyer le message",
+    message: "Que souhaitez-vous découvrir lors de la démonstration ?",
+    submit: "Envoyer la demande de démonstration",
     submitting: "Envoi en cours…",
-    success: "Merci — je vous répondrai à {email}.",
+    success: "Merci — nous répondrons à {email} au sujet de votre demande de démonstration.",
     mailtoOpened: "Votre application de messagerie devrait s’ouvrir avec le message adressé à {email}. Envoyez-le pour terminer votre demande.",
     error: "L'envoi a échoué. Réessayez, ou écrivez à {email}.",
     errorName: "Indiquez le nom auquel adresser la réponse.",
     errorEmail: "Indiquez une adresse e-mail valide, par exemple nom@exemple.fr.",
-    errorMessage: "Écrivez un court message pour m’expliquer votre demande.",
+    errorMessage: "Parlez-nous brièvement de votre organisation ou de vos besoins en formation.",
   },
 
   contact: {
-    mailtoSubject: "Message depuis le site H2D.dev",
-    mailtoBody: "Bonjour,",
+    mailtoSubject: "Demande de démonstration EduFormation",
+    mailtoBody: "Bonjour, je souhaite découvrir une plateforme EduFormation personnalisée pour mon organisation.",
   },
 
   unit: {

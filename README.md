@@ -1,6 +1,6 @@
 # EduFormation landing page
 
-A static brand landing page for H2D.dev and the EduFormation training platform. It describes the platform's capabilities and their limits; it does not implement the application, authentication, billing, or a dashboard.
+A static brand landing page for H2D.dev and EduFormation. It presents the platform's features and invites academies and companies to request a demo of their own customized EduFormation platform. Each client receives a version tailored to its organization. This repository contains the landing page, not the client platforms, authentication, billing, or dashboards.
 
 ## Stack and local development
 

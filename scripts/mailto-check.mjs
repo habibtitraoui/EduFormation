@@ -24,8 +24,8 @@ try {
   await page.locator("footer").getByRole("button", { name: "اللغة: العربية" }).click();
   await page.locator("footer").getByRole("button", { name: "English" }).click();
   assert.equal(await page.locator("html").getAttribute("lang"), "en");
-  assert.equal(await page.locator("#contact-form form").getByLabel("How can I help?").count(), 1);
-  assert.equal(await page.locator("#hero").getByRole("link", { name: "Send me a message" }).getAttribute("href"), "#contact-form");
+  assert.equal(await page.locator("#contact-form form").getByLabel("What would you like to see in your demo?").count(), 1);
+  assert.equal(await page.locator("#hero").getByRole("link", { name: "Request a demo" }).getAttribute("href"), "#contact-form");
   assert.deepEqual(errors, [], "No runtime or hydration errors");
   console.log("Contact fallback checks passed: Arabic default, form availability, and direct email destination.");
 } finally {

@@ -170,7 +170,7 @@ try {
   assert.equal(beforeBundle.lang, "ar");
   assert.equal(beforeBundle.dir, "rtl");
   assert.equal(beforeBundle.dark, true, "Saved theme is applied before the bundle loads");
-  assert.match(beforeBundle.heading, /تدريب يلائم فريقك/);
+  assert.match(beforeBundle.heading, /منصة تدريب خاصة بمؤسستك/);
   releaseBundle();
   await earlyPage.waitForLoadState("networkidle");
   assert.equal(await earlyPage.evaluate(() => document.querySelector("#hero-title") === window.__earlyHeading), true,
@@ -183,7 +183,7 @@ try {
   assert.equal(await noJsPage.locator("html").getAttribute("lang"), "ar");
   assert.equal(await noJsPage.locator("html").getAttribute("dir"), "rtl");
   assert.equal(await noJsPage.locator("main h1").count(), 1);
-  assert.match(await noJsPage.locator("main").innerText(), /دورات منظّمة/);
+  assert.match(await noJsPage.locator("main").innerText(), /نسخة مخصصة من EduFormation/);
   assert.equal(await noJsPage.locator("main section").count(), 11, "The static build should remain readable without JavaScript");
   assert.equal(await noJsPage.locator(".js-only:visible").count(), 0, "Inert JavaScript controls are hidden without JavaScript");
   await noJsContext.close();

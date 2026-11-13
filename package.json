@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Marketing landing page for EduFormation — a corporate training video platform.",
+  "description": "H2D.dev landing page for customized EduFormation training platforms.",
   "license": "UNLICENSED",
   "scripts": {
     "dev": "vite",
