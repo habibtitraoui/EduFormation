@@ -4,3 +4,4 @@
  */
 export const BRAND_NAME = "H2D.dev";
 export const BRAND_MONOGRAM = "H2D";
+export const PRODUCT_NAME = "EduFormation";

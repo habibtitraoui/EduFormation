@@ -38,7 +38,7 @@ try {
         if (message.type() === "error") errors.push(message.text());
       });
       await page.goto(baseUrl, { waitUntil: "networkidle" });
-      for (const width of [360, 768, 1024, 1280, 1920]) {
+      for (const width of [320, 360, 768, 1024, 1280, 1920]) {
         await page.setViewportSize({ width, height: 900 });
         const result = await page.evaluate(async () => {
           await document.fonts.ready;
@@ -153,6 +153,23 @@ try {
   assert.equal(await details.nth(1).evaluate((el) => el.open), true);
   await themeContext.close();
 
+  const freshContext = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: "reduce", colorScheme: "dark" });
+  const freshPage = await freshContext.newPage();
+  await freshPage.goto(baseUrl, { waitUntil: "networkidle" });
+  assert.equal(await freshPage.locator("html").getAttribute("lang"), "ar", "Arabic is the default locale");
+  assert.equal(await freshPage.evaluate(() => document.documentElement.classList.contains("dark")), false, "The new visual style defaults to light");
+  const hero = freshPage.locator("#hero");
+  await hero.locator('a[href="#features"]').click();
+  assert.equal(new URL(freshPage.url()).hash, "#features");
+  await hero.locator('a[href="#contact-form"]').click();
+  assert.equal(new URL(freshPage.url()).hash, "#contact-form");
+  assert.equal(await freshPage.locator("#contact-form form").isVisible(), true, "The demo CTA leads to the real contact form");
+  const freshFooter = freshPage.locator("footer");
+  await freshFooter.getByRole("button", { name: "اللغة: العربية" }).click();
+  await freshFooter.getByRole("button", { name: "English" }).click();
+  await hero.getByRole("link", { name: "Request a demo" }).waitFor({ state: "visible" });
+  await freshContext.close();
+
   // With the main bundle held back, locale and theme must already be correct,
   // and hydration must retain the actual pre-rendered heading node.
   const earlyContext = await contextFor("ar", "dark", 360);
@@ -186,9 +203,10 @@ try {
   assert.match(await noJsPage.locator("main").innerText(), /نسخة مخصصة من EduFormation/);
   assert.equal(await noJsPage.locator("main section").count(), 11, "The static build should remain readable without JavaScript");
   assert.equal(await noJsPage.locator(".js-only:visible").count(), 0, "Inert JavaScript controls are hidden without JavaScript");
+  assert.equal(await noJsPage.locator('#contact-form a[href^="mailto:"]').isVisible(), true, "The demo anchor still offers a real contact link without JavaScript");
   await noJsContext.close();
   assert.deepEqual(errors, [], "No runtime or hydration errors");
-  console.log("Browser checks passed: 30 viewport/locale/theme combinations, six axe scans, keyboard, locale, fonts, theme, FAQ and no-JS content.");
+  console.log("Browser checks passed: 36 viewport/locale/theme combinations, six axe scans, keyboard, locale, theme, FAQ, hero links and no-JS contact.");
 } finally {
   await browser.close();
 }

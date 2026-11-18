@@ -37,7 +37,7 @@ export function MobileMenu({ className }: { className?: string | undefined }) {
         aria-controls={panelId}
         aria-label={isOpen ? t.nav.close : t.nav.menu}
         className={cn(
-          "grid h-8 w-8 place-items-center rounded-control border border-line bg-panel text-muted",
+          "grid size-10 place-items-center rounded-control border border-line bg-panel text-muted",
           "transition-colors duration-150 hover:bg-inset hover:text-fg",
         )}
       >
@@ -57,7 +57,7 @@ export function MobileMenu({ className }: { className?: string | undefined }) {
         <div
           id={panelId}
           className={cn(
-            "absolute top-full end-0 z-50 mt-2 max-h-[calc(100dvh-72px)] w-72 max-w-[calc(100vw-40px)] overflow-y-auto rounded-overlay border border-line",
+            "absolute top-full end-0 z-50 mt-2 max-h-[calc(100dvh-92px)] w-72 max-w-[calc(100vw-40px)] overflow-y-auto rounded-overlay border border-line",
             "bg-panel p-3 shadow-overlay",
           )}
         >
@@ -83,7 +83,7 @@ export function MobileMenu({ className }: { className?: string | undefined }) {
           </div>
 
           <div className="mt-3 flex flex-col gap-2">
-            <ButtonLink href="#contact-form" size="sm" onClick={() => hide(false)}>
+            <ButtonLink href="#contact-form" size="sm" onClick={onNavigate}>
               {t.nav.contact}
             </ButtonLink>
           </div>

@@ -26,11 +26,11 @@ export function LocaleSwitcher({ className }: { className?: string | undefined }
         aria-controls={panelId}
         aria-label={`${t.footer.locale}: ${LOCALE_ENDONYM[locale]}`}
         className={cn(
-          "inline-flex h-8 shrink-0 items-center gap-1.5 rounded-control border border-line bg-panel px-2.5",
+          "inline-flex h-10 shrink-0 items-center gap-1.5 rounded-control border border-line bg-panel px-2.5",
           "transition-colors duration-150 hover:bg-inset",
         )}
       >
-        <Globe className="h-5 w-5 text-muted" aria-hidden="true" />
+        <Globe className="size-4 text-muted" aria-hidden="true" />
         <span lang={locale} dir={LOCALE_DIRECTION[locale]} className="text-label text-fg">{LOCALE_ENDONYM[locale]}</span>
         <ChevronDown
           className={cn("h-4 w-4 text-muted transition-transform duration-200", isOpen ? "rotate-180" : undefined)}

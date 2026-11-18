@@ -15,13 +15,13 @@ export function FeatureGrid() {
   ];
 
   return (
-    <SectionShell id="features" title={t.features.title} className="border-t border-line">
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <SectionShell id="features" eyebrow={t.nav.product} title={t.features.title} className="bg-inset/55">
+      <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
         {features.map(({ title, body, icon: Icon }) => (
-          <Card key={title} className="h-full p-5">
-            <Icon className="h-5 w-5 text-muted" aria-hidden="true" />
-            <h3 className="mt-5 text-card text-fg">{title}</h3>
-            <p className="mt-2 max-w-prose text-body-sm text-muted">{body}</p>
+          <Card key={title} className="p-6 lg:min-h-48 lg:p-7">
+            <span className="icon-tile"><Icon className="size-5" aria-hidden="true" /></span>
+            <h3 className="display-type mt-5 text-block">{title}</h3>
+            <p className="mt-2 max-w-[36ch] text-body text-muted">{body}</p>
           </Card>
         ))}
       </div>

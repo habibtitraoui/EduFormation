@@ -4,9 +4,10 @@ export type ThemeChoice = "light" | "dark" | "system";
 export type ResolvedTheme = "light" | "dark";
 
 const STORAGE_KEY = "eduformation-landing-theme";
+const DEFAULT_THEME: ThemeChoice = "light";
 const CYCLE: readonly ThemeChoice[] = ["light", "dark", "system"];
 const listeners = new Set<() => void>();
-let memoryChoice: ThemeChoice = "dark";
+let memoryChoice: ThemeChoice = DEFAULT_THEME;
 
 type ThemeContextValue = {
   choice: ThemeChoice;
@@ -22,7 +23,7 @@ function isChoice(value: string | null): value is ThemeChoice {
 }
 
 function readStoredChoice(): ThemeChoice {
-  if (typeof window === "undefined") return "dark";
+  if (typeof window === "undefined") return DEFAULT_THEME;
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY);
     return isChoice(stored) ? stored : memoryChoice;
@@ -38,14 +39,14 @@ function readSystemTheme(): ResolvedTheme {
 
 /** The server and hydration render the same neutral icon; CSS was set in head. */
 function serverChoice(): ThemeChoice {
-  return "dark";
+  return DEFAULT_THEME;
 }
 
 function subscribeChoice(listener: () => void): () => void {
   listeners.add(listener);
   const onStorage = (event: StorageEvent) => {
     if (event.key !== STORAGE_KEY) return;
-    memoryChoice = isChoice(event.newValue) ? event.newValue : "system";
+    memoryChoice = isChoice(event.newValue) ? event.newValue : DEFAULT_THEME;
     listener();
   };
   window.addEventListener("storage", onStorage);
@@ -72,7 +73,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // On hydration, the pre-paint script may already have applied a saved
-    // choice. Do not replace it with the server's temporary "system" snapshot.
+    // choice. Do not replace it with the server's default snapshot.
     if (choice !== readStoredChoice()) return;
     const root = document.documentElement;
     root.classList.toggle("dark", resolved === "dark");

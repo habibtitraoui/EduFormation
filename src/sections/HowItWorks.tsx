@@ -11,18 +11,23 @@ export function HowItWorks() {
   ];
 
   return (
-    <SectionShell id="how" title={t.how.title}>
-      <ol className="grid gap-6 sm:grid-cols-3 sm:gap-8">
-        {steps.map((step, index) => (
-          <li key={step.title} className="border-t border-line pt-5">
-            <span aria-hidden="true" className="numeric font-mono text-label text-muted">
-              {formatNumber(index + 1, locale).padStart(2, "0")}
-            </span>
-            <h3 className="mt-5 text-card text-fg">{step.title}</h3>
-            <p className="mt-2 max-w-prose text-body-sm text-muted">{step.body}</p>
-          </li>
-        ))}
-      </ol>
+    <SectionShell id="how" title={t.how.title} eyebrow={t.how.eyebrow}>
+      <div className="spotlight-grid">
+        <ol className="step-list" role="list">
+          {steps.map((step, index) => (
+            <li key={step.title}>
+              <span aria-hidden="true" className="step-number font-semibold">{formatNumber(index + 1, locale)}</span>
+              <div className="pt-1 sm:pt-2">
+                <h3 className="display-type text-block sm:text-title">{step.title}</h3>
+                <p className="mt-2 max-w-prose text-body text-muted">{step.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div className="showcase-frame workflow-art" aria-hidden="true">
+          <img src="/illustrations/workflow.svg" alt="" width={440} height={282} loading="lazy" decoding="async" />
+        </div>
+      </div>
     </SectionShell>
   );
 }

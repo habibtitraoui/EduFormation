@@ -1,33 +1,51 @@
-import { CourseFigure } from "../components/figures/CourseFigure";
-import { ButtonLink, SectionShell } from "../components/ui";
-import { contact } from "../lib/config";
+import { Award, BookOpen, CalendarDays, CirclePlay } from "lucide-react";
+
+import { ButtonLink, Eyebrow, SectionShell } from "../components/ui";
+import { LOCALES } from "../content/types";
+import { formatNumber } from "../lib/format";
 import { useLocale } from "../lib/locale";
 
 export function Hero() {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
+  const { hero } = t;
+  const facts = [
+    { value: formatNumber(LOCALES.length, locale), label: hero.facts.languages },
+    { value: "A4", label: hero.facts.certificate },
+    { value: hero.facts.sessionsValue, label: hero.facts.sessions },
+  ];
 
   return (
-    <SectionShell id="hero" ariaLabelledby="hero-title" className="hero-backdrop">
-      <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14">
-        <div className="max-w-[560px]">
-          <p className="flex items-center gap-3 text-label text-muted">
-            <span className="w-6 border-t border-accent" aria-hidden="true" />
-            {t.hero.eyebrow}
-          </p>
-          <h1 id="hero-title" className="mt-5 text-display-sm sm:text-display lg:text-display-lg">
-            <span className="block">{t.hero.title}</span>
-            <span className="block text-accent">{t.hero.highlight}</span>
-          </h1>
-          <p className="mt-6 max-w-prose text-body text-muted">{t.hero.body}</p>
-          <div className="mt-8 flex flex-wrap gap-2">
-            <ButtonLink href="#contact-form" size="lg">{t.hero.ctaPrimary}</ButtonLink>
-            <ButtonLink href={`mailto:${contact.email}`} variant="secondary" size="lg">
-              {t.hero.ctaSecondary}
-            </ButtonLink>
-          </div>
-          <p className="mt-4 max-w-prose text-label text-muted">{t.hero.meta}</p>
+    <SectionShell id="hero" ariaLabelledby="hero-title" className="hero-shell">
+      <div className="relative text-center">
+        <span className="hero-float hero-float-start" aria-hidden="true"><BookOpen className="size-7" /></span>
+        <span className="hero-float hero-float-end" aria-hidden="true"><Award className="size-7" /></span>
+        <Eyebrow>{hero.eyebrow}</Eyebrow>
+        <h1 id="hero-title" className="display-type hero-title mx-auto mt-5 max-w-[70rem] sm:mt-6">
+          {hero.title}{" "}
+          <span className="hero-accent">
+            {hero.highlight}
+            <svg viewBox="0 0 440 18" preserveAspectRatio="none" fill="none" className="hero-underline" aria-hidden="true">
+              <path d="M3 11C100 22 220 -1 437 8" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" />
+            </svg>
+          </span>
+        </h1>
+        <p className="hero-lead">{hero.body}</p>
+        <ul className="hero-facts" role="list">
+          {facts.map(({ value, label }) => (
+            <li key={label}>
+              <p className="display-type hero-fact-value"><bdi>{value}</bdi></p>
+              <p className="hero-fact-label">{label}</p>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
+          <ButtonLink href="#contact-form" size="lg">
+            <CalendarDays className="size-4 shrink-0" aria-hidden="true" />{hero.ctaPrimary}
+          </ButtonLink>
+          <ButtonLink href="#features" variant="secondary" size="lg">
+            <CirclePlay className="size-4 shrink-0" aria-hidden="true" />{hero.ctaExplore}
+          </ButtonLink>
         </div>
-        <CourseFigure />
       </div>
     </SectionShell>
   );

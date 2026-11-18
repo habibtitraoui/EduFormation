@@ -14,7 +14,8 @@ export const en = {
   },
 
   nav: {
-    product: "Product",
+    overview: "Overview",
+    product: "Features",
     structure: "Structure",
     certificates: "Certificates",
     live: "Live sessions",
@@ -33,8 +34,14 @@ export const en = {
     highlight: "built for your organization.",
     body: "We build each academy or company its own customized EduFormation platform, tailored to its brand and training needs, with courses, live sessions, learner progress, and certificates.",
     ctaPrimary: "Request a demo",
-    ctaSecondary: "Email us",
+    ctaExplore: "Explore the platform",
     meta: "See how your own EduFormation platform could work for your organization.",
+    facts: {
+      languages: "Platform languages",
+      certificate: "Print-ready certificates",
+      sessionsValue: "Live",
+      sessions: "Sessions in the browser",
+    },
     figureCaption: "Course view. Illustrative layout, not a screenshot of live data.",
 
     /* Illustrative course mock */
@@ -53,6 +60,7 @@ export const en = {
   },
 
   strip: {
+    title: "All your training, in one place",
     label: "Platform capabilities",
     video: "Direct uploads or external embeds",
     videoDetail: "Your bucket, or the host you already use",
@@ -77,7 +85,7 @@ export const en = {
   },
 
   features: {
-    title: "What the platform does",
+    title: "Meet your training toolkit",
     progress: {
       title: "Progress that resumes",
       body: "Per-lesson watch position: a learner returns to the second they left.",
@@ -172,6 +180,7 @@ export const en = {
   },
 
   protection: {
+    controlsTitle: "Browser safeguards",
     deterredTitle: "Capture is deterred, not prevented",
     deterredBody: "Uploaded video is protected by measures that work inside the browser.",
     deterredHotkeys: "Screenshot hotkeys, right-click save, drag-out, copy, print, casting and Picture-in-Picture are blocked",
@@ -194,6 +203,7 @@ export const en = {
   },
 
   how: {
+    eyebrow: "Simple setup",
     title: "How it works",
     step1Title: "Build the path",
     step1Body: "Create a learning path, add courses, upload or embed the lessons. Leave what is not ready in draft.",

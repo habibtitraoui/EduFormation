@@ -10,7 +10,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { Wordmark } from "./Wordmark";
 
 const linkClass =
-  "text-body-sm text-muted transition-colors duration-150 hover:text-fg rounded-control w-fit";
+  "w-fit rounded-control text-body-sm text-muted transition-colors duration-150 hover:text-accent hover:underline";
 
 function currentYear(): number {
   return new Date().getFullYear();
@@ -38,22 +38,24 @@ export function SiteFooter() {
   const year = useSyncExternalStore(subscribeYear, currentYear, buildYear);
   const productLinks = [
     { label: t.footer.courses, href: "#features" },
+    { label: t.nav.structure, href: "#structure" },
     { label: t.nav.live, href: "#live" },
     { label: t.nav.certificates, href: "#certificates" },
     { label: t.nav.admin, href: "#admin" },
   ];
 
   const resourceLinks = [
+    { label: t.how.title, href: "#how" },
     { label: t.footer.security, href: "#protection" },
     { label: t.nav.faq, href: "#faq" },
   ];
 
   return (
-    <footer className="border-t border-line bg-canvas">
-      <div className="mx-auto w-full max-w-page px-5 py-16 md:px-6 md:py-20 xl:px-8">
+    <footer className="border-t border-line bg-panel">
+      <div className="mx-auto w-full max-w-page px-5 py-11 md:px-10 md:py-14 xl:px-8">
         <div className="grid gap-10 md:grid-cols-4">
           <div className="flex flex-col gap-4">
-            <Wordmark />
+            <a href="#hero" className="w-fit rounded-control"><Wordmark /></a>
             <p className="max-w-prose text-body-sm text-muted">{t.footer.tagline}</p>
             <div className="flex items-center gap-2">
               <LocaleSwitcher />
@@ -97,7 +99,7 @@ export function SiteFooter() {
             </p>
             <ul className="mt-3 flex flex-col gap-2">
               <li>
-                <a href={`mailto:${contact.email}`} className={cn(linkClass, "break-all font-mono text-label")}>
+                <a href={`mailto:${contact.email}`} dir="ltr" className={cn(linkClass, "wrap-anywhere text-label")}>
                   {contact.email}
                 </a>
               </li>

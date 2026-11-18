@@ -82,12 +82,12 @@ export function ContactForm() {
     : fillTemplate(t.form.success, { email: sentTo });
 
   return (
-    <div id="contact-form" tabIndex={-1} className="js-only scroll-mt-18 border-t border-line pt-8">
+    <div className="js-only min-w-0 rounded-overlay border border-line bg-panel p-5 shadow-card sm:p-7">
       {submission === "success" ? (
         <Alert tone={contact.endpoint === null ? "info" : "success"}>{successMessage}</Alert>
       ) : (
         <form noValidate onSubmit={(event) => { void submit(event); }}>
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             <Field label={t.form.name} htmlFor={`${id}-name`} error={errors.name ? t.form.errorName : undefined}>
               <Input id={`${id}-name`} name="name" autoComplete="name" required value={values.name}
                 onChange={(event) => update("name", event.target.value)} disabled={submitting}
@@ -100,7 +100,7 @@ export function ContactForm() {
                 invalid={Boolean(errors.email)} aria-invalid={Boolean(errors.email)}
                 aria-describedby={errors.email ? fieldErrorId(`${id}-email`) : undefined} />
             </Field>
-            <Field label={t.form.message} htmlFor={`${id}-message`} error={errors.message ? t.form.errorMessage : undefined} className="md:col-span-2">
+            <Field label={t.form.message} htmlFor={`${id}-message`} error={errors.message ? t.form.errorMessage : undefined} className="sm:col-span-2">
               <Textarea id={`${id}-message`} name="message" required value={values.message} rows={5}
                 onChange={(event) => update("message", event.target.value)} disabled={submitting}
                 invalid={Boolean(errors.message)} aria-invalid={Boolean(errors.message)}

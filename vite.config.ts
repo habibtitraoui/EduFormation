@@ -132,24 +132,30 @@ function prerenderSinglePage(): Plugin {
         const render = (initialLocale: "en" | "fr" | "ar") =>
           renderToString(createElement(StrictMode, null, createElement(App, { initialLocale })));
         const [english, french, arabic] = [render("en"), render("fr"), render("ar")];
-        const localized = `
-    <template id="prerender-en">${english}</template>
-    <template id="prerender-fr">${french}</template>
+        // Activate a saved locale as soon as its template has arrived, without
+        // waiting for the other locale or the hydration bundle.
+        const localized = [["en", english], ["fr", french]].map(([lang, markup]) => `
+    <template id="prerender-${lang}">${markup}</template>
     <script>
       (function () {
+        var html = document.documentElement;
+        if (html.lang !== "${lang}") return;
         var root = document.getElementById("root");
-        var lang = document.documentElement.lang;
-        var template = document.getElementById("prerender-" + lang);
+        var template = document.getElementById("prerender-${lang}");
         if (root && template && template.content) root.replaceChildren(template.content.cloneNode(true));
-        document.documentElement.dataset.localeReady = "true";
+        html.dataset.localeReady = "true";
       })();
-    </script>`;
+    </script>`).join("");
         const root = `<div id="root" data-prerendered="true" data-build-year="${new Date().getFullYear()}">${arabic}</div>${localized}`;
         const htmlPath = resolve(config.root, config.build.outDir, "index.html");
         const html = await readFile(htmlPath, "utf8");
         const fallback = /<div id="root">[\s\S]*?<\/div>/;
         if (!fallback.test(html)) throw new Error("Could not find the static root to pre-render.");
-        const output = html.replace(fallback, () => root);
+        let output = html.replace(fallback, () => root);
+        // The static page can render without React. Let its HTML and CSS load
+        // first rather than competing with the hydration bundle on slow links.
+        const entry = /\n\s*<script type="module"[^>]+src="[^"]+"[^>]*><\/script>/.exec(output)?.[0];
+        if (entry) output = output.replace(entry, "").replace("</body>", `${entry}\n  </body>`);
         await writeFile(htmlPath, output);
         const raw = (Buffer.byteLength(output) / 1000).toFixed(2);
         const gzip = (gzipSync(output).length / 1000).toFixed(2);

@@ -36,8 +36,12 @@ for (const root of [...componentRoots, copyRoot]) {
       if (isComponent && ts.isJsxText(node) && node.getText(source).trim()) {
         issue(file, source, node, "Literal JSX text belongs in a dictionary.");
       }
-      if (isComponent && ts.isJsxAttribute(node) && visibleAttributes.has(node.name.getText(source)) && node.initializer && ts.isStringLiteral(node.initializer)) {
-        issue(file, source, node, "Literal accessible text belongs in a dictionary.");
+      if (isComponent && ts.isJsxAttribute(node) && node.initializer && ts.isStringLiteral(node.initializer)) {
+        const name = node.name.getText(source);
+        // A decorative image needs an explicitly empty alternative, not translatable copy.
+        if (visibleAttributes.has(name) && !(name === "alt" && node.initializer.text === "")) {
+          issue(file, source, node, "Literal accessible text belongs in a dictionary.");
+        }
       }
       if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
         const value = node.text;
