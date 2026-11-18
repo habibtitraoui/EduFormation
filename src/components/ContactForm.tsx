@@ -76,18 +76,17 @@ export function ContactForm() {
     }
   }
 
-  const errorMessage = fillTemplate(t.form.error, { email: contact.email });
   const successMessage = contact.endpoint === null
-    ? fillTemplate(t.form.mailtoOpened, { email: contact.email })
+    ? t.form.mailtoOpened
     : fillTemplate(t.form.success, { email: sentTo });
 
   return (
-    <div id="contact-form" tabIndex={-1} className="js-only scroll-mt-18 border-t border-line pt-8">
+    <div className="js-only min-w-0 rounded-overlay border border-line bg-panel p-5 shadow-card sm:p-7">
       {submission === "success" ? (
         <Alert tone={contact.endpoint === null ? "info" : "success"}>{successMessage}</Alert>
       ) : (
         <form noValidate onSubmit={(event) => { void submit(event); }}>
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             <Field label={t.form.name} htmlFor={`${id}-name`} error={errors.name ? t.form.errorName : undefined}>
               <Input id={`${id}-name`} name="name" autoComplete="name" required value={values.name}
                 onChange={(event) => update("name", event.target.value)} disabled={submitting}
@@ -100,14 +99,19 @@ export function ContactForm() {
                 invalid={Boolean(errors.email)} aria-invalid={Boolean(errors.email)}
                 aria-describedby={errors.email ? fieldErrorId(`${id}-email`) : undefined} />
             </Field>
-            <Field label={t.form.message} htmlFor={`${id}-message`} error={errors.message ? t.form.errorMessage : undefined} className="md:col-span-2">
+            <Field label={t.form.message} htmlFor={`${id}-message`} error={errors.message ? t.form.errorMessage : undefined} className="sm:col-span-2">
               <Textarea id={`${id}-message`} name="message" required value={values.message} rows={5}
                 onChange={(event) => update("message", event.target.value)} disabled={submitting}
                 invalid={Boolean(errors.message)} aria-invalid={Boolean(errors.message)}
                 aria-describedby={errors.message ? fieldErrorId(`${id}-message`) : undefined} />
             </Field>
           </div>
-          {submission === "error" ? <Alert tone="danger" className="mt-4">{errorMessage}</Alert> : null}
+          {submission === "error" ? (
+            <Alert tone="danger" className="mt-4">
+              {t.form.error}{" "}
+              <a href="#footer-contact" className="rounded-control underline underline-offset-2">{t.finalCta.otherContact}</a>
+            </Alert>
+          ) : null}
           <Button type="submit" size="lg" disabled={submitting} className="relative mt-5 min-w-40">
             <span aria-hidden="true" className="invisible">{t.form.submit}</span>
             <span className="absolute flex items-center gap-2">

@@ -12,7 +12,8 @@ export const fr = {
   },
 
   nav: {
-    product: "Produit",
+    overview: "Aperçu",
+    product: "Fonctionnalités",
     structure: "Structure",
     certificates: "Certificats",
     live: "Sessions en direct",
@@ -27,12 +28,18 @@ export const fr = {
 
   hero: {
     eyebrow: "H2D.dev · Formation et développement",
-    title: "Votre propre plateforme de formation,",
+    title: "Votre plateforme de formation,",
     highlight: "conçue pour votre organisation.",
     body: "Nous créons pour chaque académie ou entreprise sa propre plateforme EduFormation personnalisée, adaptée à sa marque et à ses besoins : cours, sessions en direct, suivi des apprenants et certificats.",
     ctaPrimary: "Demander une démonstration",
-    ctaSecondary: "Nous écrire",
+    ctaExplore: "Explorer la plateforme",
     meta: "Découvrez EduFormation adapté à votre organisation.",
+    facts: {
+      languages: "Langues disponibles",
+      certificate: "Certificats à imprimer",
+      sessionsValue: "Direct",
+      sessions: "Sessions dans le navigateur",
+    },
     figureCaption: "Vue d'un cours. Maquette illustrative, pas une capture de données réelles.",
 
     figureCourse: "Présentation de l'entreprise",
@@ -50,6 +57,7 @@ export const fr = {
   },
 
   strip: {
+    title: "Toutes vos formations au même endroit",
     label: "Capacités de la plateforme",
     video: "Téléversement direct ou intégration externe",
     videoDetail: "Votre stockage, ou l'hébergeur que vous utilisez déjà",
@@ -75,7 +83,7 @@ export const fr = {
   },
 
   features: {
-    title: "Ce que fait la plateforme",
+    title: "Les outils de votre plateforme",
     progress: {
       title: "Une progression qui reprend",
       body: "Position de lecture par leçon : l'apprenant revient à la seconde où il s'est arrêté.",
@@ -167,6 +175,7 @@ export const fr = {
   },
 
   protection: {
+    controlsTitle: "Protections du navigateur",
     deterredTitle: "La capture est dissuadée, pas empêchée",
     deterredBody: "La vidéo téléversée est protégée par des mesures qui fonctionnent dans le navigateur.",
     deterredHotkeys:
@@ -190,6 +199,7 @@ export const fr = {
   },
 
   how: {
+    eyebrow: "Mise en place",
     title: "Comment cela fonctionne",
     step1Title: "Construisez le parcours",
     step1Body:
@@ -223,7 +233,7 @@ export const fr = {
   finalCta: {
     title: "Demandez une démonstration de votre plateforme",
     body: "Présentez votre académie ou votre entreprise. Nous vous montrerons comment adapter EduFormation à votre marque, à vos apprenants et à vos objectifs.",
-    primary: "Demander une démonstration",
+    otherContact: "Autres moyens de nous contacter",
   },
 
   footer: {
@@ -232,6 +242,11 @@ export const fr = {
     courses: "Cours",
     resources: "Ressources",
     contact: "Contact",
+    social: {
+      facebook: "Facebook",
+      instagram: "Instagram",
+      whatsapp: "WhatsApp",
+    },
     designSystem: "Système de design",
     security: "Notes de sécurité",
     legal: "© {year} EduFormation. Tous droits réservés.",
@@ -249,8 +264,8 @@ export const fr = {
     submit: "Envoyer la demande de démonstration",
     submitting: "Envoi en cours…",
     success: "Merci — nous répondrons à {email} au sujet de votre demande de démonstration.",
-    mailtoOpened: "Votre application de messagerie devrait s’ouvrir avec le message adressé à {email}. Envoyez-le pour terminer votre demande.",
-    error: "L'envoi a échoué. Réessayez, ou écrivez à {email}.",
+    mailtoOpened: "Votre application de messagerie devrait s’ouvrir avec un brouillon prérempli. Envoyez le message depuis votre application pour terminer la demande.",
+    error: "L’envoi a échoué. Veuillez réessayer.",
     errorName: "Indiquez le nom auquel adresser la réponse.",
     errorEmail: "Indiquez une adresse e-mail valide, par exemple nom@exemple.fr.",
     errorMessage: "Parlez-nous brièvement de votre organisation ou de vos besoins en formation.",

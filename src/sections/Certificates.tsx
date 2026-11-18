@@ -1,5 +1,5 @@
+import { FeatureSpotlight } from "../components/FeatureSpotlight";
 import { CertificateFigure } from "../components/figures/CertificateFigure";
-import { SectionShell } from "../components/ui";
 import { fillTemplate, formatNumber } from "../lib/format";
 import { useLocale } from "../lib/locale";
 
@@ -19,22 +19,15 @@ export function Certificates() {
   ];
 
   return (
-    <SectionShell id="certificates" ariaLabelledby="certificates-title">
-      <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-        <div>
-          <h2 id="certificates-title" className="text-title text-fg">{certificate.title}</h2>
-          <p className="mt-4 max-w-prose text-body text-muted">{certificate.body}</p>
-          <dl className="mt-7 border-t border-line">
-            {specs.map((spec) => (
-              <div key={spec.label} className="grid gap-1 border-b border-line py-3 sm:grid-cols-[7rem_minmax(0,1fr)] sm:gap-4">
-                <dt className="text-label text-muted">{spec.label}</dt>
-                <dd className="text-body-sm text-fg">{spec.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-        <div className="min-w-0 lg:order-first"><CertificateFigure /></div>
-      </div>
-    </SectionShell>
+    <FeatureSpotlight id="certificates" eyebrow={t.nav.certificates} title={certificate.title} description={certificate.body} figure={<CertificateFigure />} reverse>
+      <dl className="mt-6 divide-y divide-line rounded-card border border-line bg-panel px-4 sm:px-5">
+        {specs.map((spec) => (
+          <div key={spec.label} className="grid gap-1 py-3 sm:grid-cols-[7rem_minmax(0,1fr)] sm:gap-4">
+            <dt className="text-label font-semibold text-accent">{spec.label}</dt>
+            <dd className="text-body-sm text-fg">{spec.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </FeatureSpotlight>
   );
 }

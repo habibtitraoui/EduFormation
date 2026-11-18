@@ -11,7 +11,7 @@ const ICONS: Record<ThemeChoice, typeof Sun> = {
 };
 
 /**
- * A 32px icon button that cycles light → dark → system (§5.5). The accessible
+ * An icon button that cycles light → dark → system (§5.5). The accessible
  * name always states the current choice, because an icon on its own cannot.
  */
 export function ThemeToggle({ className }: { className?: string | undefined }) {
@@ -33,12 +33,12 @@ export function ThemeToggle({ className }: { className?: string | undefined }) {
       aria-label={label}
       aria-pressed={choice === "dark"}
       className={cn(
-        "js-only grid h-8 w-8 shrink-0 place-items-center rounded-control border border-line bg-panel text-muted",
+        "js-only grid size-10 shrink-0 place-items-center rounded-control border border-line bg-panel text-muted",
         "transition-colors duration-150 hover:bg-inset hover:text-fg",
         className,
       )}
     >
-      <Icon className="h-5 w-5" aria-hidden="true" />
+      <Icon className="size-[18px]" aria-hidden="true" />
     </button>
   );
 }

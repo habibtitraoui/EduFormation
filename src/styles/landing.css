@@ -1,0 +1,340 @@
+/* Marketing layout and illustration styles. Palette and type tokens live in tokens.css. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--accent-line);
+  border-radius: 99rem;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.875rem;
+  font-weight: 550;
+  line-height: 1.4;
+}
+
+.display-type {
+  font-family: var(--font-display-face), var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.048em;
+  line-height: 1.12;
+}
+
+.section-shell {
+  padding-block: clamp(3rem, 5.3vw, 5rem);
+}
+
+.section-heading {
+  margin-inline: auto;
+  margin-block-end: clamp(2rem, 4.1vw, 3.75rem);
+  max-width: 58rem;
+  text-align: center;
+}
+
+.section-title {
+  font-size: clamp(2rem, 4.4vw, 3.75rem);
+}
+
+.section-description {
+  max-width: 62ch;
+  margin: 0.875rem auto 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+/* The central headline, capability card and paired actions mirror the rhythm
+   of the reference. The floating tiles are decorative and desktop-only. */
+.hero-shell {
+  padding-block: clamp(2.75rem, 4.35vw, 4.25rem) clamp(2.5rem, 5.15vw, 5rem);
+}
+
+.hero-title {
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+}
+
+.hero-accent {
+  position: relative;
+  display: block;
+  color: var(--accent);
+}
+
+.hero-underline {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: -0.24em;
+  margin-inline: auto;
+  inline-size: min(7.5em, 76%);
+  block-size: 0.22em;
+  color: var(--ink);
+}
+
+.hero-lead {
+  max-width: 59rem;
+  margin-inline: auto;
+  margin-block-start: clamp(1.75rem, 3.2vw, 2.5rem);
+  color: var(--muted);
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  line-height: 1.65;
+  text-wrap: balance;
+}
+
+.hero-float {
+  position: absolute;
+  display: none;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-card);
+  background: var(--panel);
+  color: var(--accent);
+  box-shadow: var(--shadow-feature);
+}
+
+@media (min-width: 75rem) {
+  .hero-float {
+    display: grid;
+  }
+
+  .hero-float-start {
+    inset-block-start: 5.75rem;
+    inset-inline-start: 1.5%;
+  }
+
+  .hero-float-end {
+    inset-block-end: 5rem;
+    inset-inline-end: 1.5%;
+  }
+}
+
+.hero-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 35rem;
+  margin: clamp(1.5rem, 2.4vw, 2.25rem) auto 0;
+  padding: clamp(1rem, 2.1vw, 1.625rem) clamp(0.35rem, 2vw, 1.5rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-overlay);
+  background: var(--panel);
+  box-shadow: var(--shadow-feature);
+}
+
+.hero-facts li {
+  padding-inline: clamp(0.3rem, 1.2vw, 0.85rem);
+}
+
+.hero-facts li + li {
+  border-inline-start: 1px solid var(--line);
+}
+
+.hero-fact-value {
+  color: var(--accent);
+  font-size: clamp(1.45rem, 3.1vw, 2.35rem);
+  line-height: 1.12;
+}
+
+.hero-fact-label {
+  margin-block-start: 0.4rem;
+  color: var(--muted);
+  font-size: clamp(0.75rem, 1.15vw, 0.875rem);
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+/* Keep the hero actions still while the first-visit fonts load on phones. */
+@media (max-width: 28rem) {
+  .hero-lead {
+    min-block-size: 4lh;
+  }
+
+  .hero-fact-label {
+    min-block-size: 2lh;
+  }
+}
+
+.primary-action {
+  background-color: var(--ink);
+  box-shadow: var(--shadow-accent);
+}
+
+.primary-action:hover {
+  background-color: var(--ink-hover);
+}
+
+.brand-mark,
+.icon-tile,
+.step-number {
+  display: inline-grid;
+  flex-shrink: 0;
+  place-items: center;
+  background: var(--accent-gloss);
+  color: var(--ink-fg);
+  box-shadow: var(--shadow-accent);
+}
+
+.brand-mark {
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+  border-radius: var(--radius-control);
+}
+
+.icon-tile {
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  border-radius: var(--radius-control);
+}
+
+.icon-tile-soft {
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: none;
+}
+
+.spotlight-grid {
+  display: grid;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.spotlight-title {
+  font-size: clamp(1.875rem, 3.45vw, 2.875rem);
+}
+
+.showcase-frame {
+  min-width: 0;
+  padding: clamp(0.875rem, 3.4vw, 2.75rem);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-overlay);
+  background: radial-gradient(ellipse at 55% 12%, var(--accent-glow), transparent 72%), var(--inset);
+}
+
+@media (min-width: 64rem) {
+  .spotlight-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.step-list li {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(1rem, 3vw, 1.625rem);
+}
+
+.step-list li:not(:last-child) {
+  padding-block-end: 2.25rem;
+}
+
+.step-list li:not(:last-child)::before {
+  position: absolute;
+  inset-block: var(--step-size) 0;
+  inset-inline-start: calc((var(--step-size) - 2px) / 2);
+  inline-size: 2px;
+  background: var(--accent-line);
+  content: "";
+}
+
+.step-list {
+  --step-size: clamp(2.75rem, 5vw, 3.75rem);
+}
+
+.step-number {
+  position: relative;
+  inline-size: var(--step-size);
+  block-size: var(--step-size);
+  border-radius: 50%;
+  font-size: clamp(1.25rem, 2.25vw, 1.75rem);
+  line-height: 1;
+}
+
+.workflow-art {
+  display: grid;
+  min-block-size: clamp(15rem, 28vw, 24rem);
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle, var(--accent-line) 1px, transparent 1.5px) center / 22px 22px,
+    radial-gradient(ellipse at center, var(--accent-glow), transparent 75%),
+    var(--inset);
+}
+
+.workflow-art img {
+  inline-size: min(100%, 27rem);
+  block-size: auto;
+}
+
+.faq-item > summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  min-block-size: 4.625rem;
+  padding: 1rem clamp(1rem, 3vw, 1.75rem);
+  border-radius: var(--radius-card);
+  list-style: none;
+  transition: color 150ms ease-out;
+}
+
+.faq-chevron {
+  transition: rotate 150ms ease-out;
+}
+
+.faq-item > summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item > summary:hover,
+.faq-item[open] > summary {
+  color: var(--accent);
+}
+
+.faq-dot {
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
+  border-radius: 50%;
+  background: var(--accent-gloss);
+  box-shadow: var(--shadow-accent);
+}
+
+.faq-item[open] .faq-chevron {
+  rotate: 180deg;
+}
+
+.faq-answer {
+  padding: 0 clamp(1rem, 3vw, 1.75rem) 1.375rem;
+  padding-inline-start: calc(clamp(1rem, 3vw, 1.75rem) + 1.125rem + clamp(0.75rem, 2vw, 1.25rem));
+}
+
+.contact-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 100% 90%, var(--accent-glow), transparent 76%), var(--accent-soft);
+}
+
+.contact-panel::before {
+  position: absolute;
+  z-index: -1;
+  inset-block-end: -11rem;
+  inset-inline-end: -8rem;
+  inline-size: 21rem;
+  block-size: 21rem;
+  border: 1px solid var(--accent-line);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2.5rem var(--accent-glow), 0 0 0 5rem var(--accent-glow);
+  content: "";
+}
+
+html:not(.js) .contact-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+[dir="rtl"] .display-type {
+  letter-spacing: normal;
+  line-height: 1.32;
+  font-weight: 700;
+}

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
  * Shared behaviour for the two disclosures on this page (mobile navigation and
- * the locale switcher): Escape closes, an outside pointer press closes, focus
+ * the locale switcher): Escape closes, an outside click closes, focus
  * returns to the trigger, and — optionally — Tab is trapped inside the panel.
  */
 
@@ -56,7 +56,9 @@ export function useDisclosure({ trapFocus = false, focusOnOpen = false }: Disclo
     const target = restoreTarget.current;
     restoreTarget.current = null;
     if (target !== null && document.contains(target)) {
-      target.focus();
+      target.focus({ preventScroll: true });
+      // Honor scroll margins (e.g. the footer toggle below the sticky header).
+      target.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "instant" });
     }
   }, [isOpen, focusOnOpen]);
 
@@ -104,17 +106,19 @@ export function useDisclosure({ trapFocus = false, focusOnOpen = false }: Disclo
   useEffect(() => {
     if (!isOpen) return;
 
-    const onPointerDown = (event: PointerEvent) => {
-      const target = event.target;
-      if (!(target instanceof Node)) return;
-      if (containerRef.current?.contains(target)) return;
-      if (triggerRef.current?.contains(target)) return;
+    // Wait for activation before collapsing inline content. A pointerdown
+    // would move links below the disclosure before the click reaches them.
+    const onOutsideClick = (event: MouseEvent) => {
+      const container = containerRef.current;
+      // A selection can already have unmounted its button by the time the
+      // event reaches the document. The original event path is still intact.
+      if (!container || event.composedPath().includes(container)) return;
       hide(false);
     };
 
-    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("click", onOutsideClick);
     return () => {
-      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("click", onOutsideClick);
     };
   }, [isOpen, hide]);
 

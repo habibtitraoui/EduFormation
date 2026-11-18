@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 
 import AxeBuilder from "@axe-core/playwright";
-import { chromium } from "@playwright/test";
+import { chromium, expect } from "@playwright/test";
 
 const baseUrl = process.env.BASE_URL || "http://127.0.0.1:4173";
 const origin = new URL(baseUrl).origin;
@@ -26,6 +26,57 @@ async function contextFor(locale, theme, width) {
   });
 }
 
+const endonyms = { en: "English", fr: "Français", ar: "العربية" };
+
+async function controlledPanel(trigger) {
+  const id = await trigger.getAttribute("aria-controls");
+  assert(id, "Disclosure trigger references its panel");
+  return trigger.page().locator(`[id="${id}"]`);
+}
+
+async function assertLanguageList(trigger, locale, label, menuId = null) {
+  const list = await controlledPanel(trigger);
+  await expect(list).toBeVisible();
+  assert.deepEqual(await list.getByRole("button").allTextContents(), Object.values(endonyms));
+  await expect(list.locator('button[aria-current="true"] span')).toHaveAttribute("lang", locale);
+  // A clipped button still counts as visible in Playwright. Check the bounds
+  // and hit-test each row near its edges before Playwright can scroll for a tap.
+  await expect.poll(() => list.evaluate((element, parentId) => {
+    const root = document.documentElement;
+    const viewport = { left: 0, right: root.clientWidth, top: 0, bottom: root.clientHeight };
+    const menu = parentId ? document.getElementById(parentId) : null;
+    const rect = element.getBoundingClientRect();
+    const contains = (box) => rect.left >= box.left && rect.right <= box.right
+      && rect.top >= box.top && rect.bottom <= box.bottom;
+    return {
+      fitsViewport: contains(viewport),
+      fitsMenu: !menu || (contains(menu.getBoundingClientRect()) && menu.scrollWidth === menu.clientWidth),
+      noHorizontalOverflow: root.scrollWidth === root.clientWidth,
+      tappable: [...element.querySelectorAll("button")].map((button) => {
+        const { left, right, top, bottom, height } = button.getBoundingClientRect();
+        return height >= 44 && [left + 4, right - 4].every((x) => [top + 4, bottom - 4]
+          .every((y) => button.contains(document.elementFromPoint(x, y))));
+      }),
+    };
+  }, menuId), { message: `${label}: the open list must fit and each option must be tappable` }).toEqual({
+    fitsViewport: true,
+    fitsMenu: true,
+    noHorizontalOverflow: true,
+    tappable: [true, true, true],
+  });
+  return list;
+}
+
+async function tapLanguage(trigger, list, locale) {
+  await list.getByRole("button", { name: endonyms[locale], exact: true }).tap();
+  const page = trigger.page();
+  await expect(page.locator("html")).toHaveAttribute("lang", locale);
+  await expect(page.locator("html")).toHaveAttribute("dir", locale === "ar" ? "rtl" : "ltr");
+  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  await expect(trigger).toBeFocused();
+  assert.equal(await page.evaluate(() => localStorage.getItem("eduformation-landing-locale")), locale);
+}
+
 try {
   // Exercise every requested breakpoint in every locale and theme. Axe is run
   // for all six locale/theme pairs at a mix of mobile and desktop widths.
@@ -38,7 +89,7 @@ try {
         if (message.type() === "error") errors.push(message.text());
       });
       await page.goto(baseUrl, { waitUntil: "networkidle" });
-      for (const width of [360, 768, 1024, 1280, 1920]) {
+      for (const width of [320, 360, 768, 1024, 1280, 1920]) {
         await page.setViewportSize({ width, height: 900 });
         const result = await page.evaluate(async () => {
           await document.fonts.ready;
@@ -79,6 +130,58 @@ try {
     }
   }
 
+  // Narrow portrait, short landscape (including when the options must scroll),
+  // and tablet landscape with the extra header picker.
+  for (const viewport of [
+    { width: 320, height: 568 },
+    { width: 568, height: 260 },
+    { width: 568, height: 214 },
+    { width: 844, height: 300 },
+  ]) {
+    const fitsWithoutScrolling = viewport.height >= 260;
+    for (const [locale, next] of [["en", "fr"], ["fr", "ar"], ["ar", "en"]]) {
+      const touchContext = await browser.newContext({
+        viewport, isMobile: true, hasTouch: true, reducedMotion: "reduce",
+        storageState: storage(locale, viewport.height < 300 ? "dark" : "light"),
+      });
+      const touchPage = await touchContext.newPage();
+      touchPage.on("pageerror", (error) => errors.push(error.message));
+      await touchPage.goto(baseUrl, { waitUntil: "networkidle" });
+      const label = `${locale}/${viewport.width}×${viewport.height}`;
+      const header = touchPage.locator("header");
+      const menu = header.locator('button[aria-expanded]').filter({ has: touchPage.locator("svg.lucide-menu") });
+      if (viewport.width >= 768) {
+        const picker = header.getByRole("button", { name: /^(Language|Langue|اللغة):/ });
+        await picker.tap();
+        await assertLanguageList(picker, locale, `${label} tablet header`);
+        await touchPage.keyboard.press("Escape");
+        await expect(picker).toHaveAttribute("aria-expanded", "false");
+      }
+
+      await menu.tap();
+      const menuPanel = await controlledPanel(menu);
+      const nestedPicker = menuPanel.locator('button[aria-controls]');
+      await nestedPicker.tap();
+      const nestedList = fitsWithoutScrolling
+        ? await assertLanguageList(nestedPicker, locale, `${label} mobile menu`, await menuPanel.getAttribute("id"))
+        : await controlledPanel(nestedPicker);
+      await tapLanguage(nestedPicker, nestedList, next);
+      await expect(menu).toHaveAttribute("aria-expanded", "true");
+      await touchPage.keyboard.press("Escape");
+      await expect(menu).toBeFocused();
+      await expect(menu).toHaveAttribute("aria-expanded", "false");
+
+      const footer = touchPage.locator("footer");
+      const footerPicker = footer.locator('button[aria-controls]');
+      await footerPicker.tap();
+      const footerList = fitsWithoutScrolling
+        ? await assertLanguageList(footerPicker, next, `${label} footer`)
+        : await controlledPanel(footerPicker);
+      await tapLanguage(footerPicker, footerList, locale);
+      await touchContext.close();
+    }
+  }
+
   const context = await contextFor("en", "light", 360);
   const page = await context.newPage();
   const fontRequests = [];
@@ -106,11 +209,14 @@ try {
   await language.click();
   assert.equal(await language.getAttribute("aria-expanded"), "true");
   assert.equal(fontRequests.length, 0, "Opening the language list must not fetch the Arabic font on English pages");
+  const menuScan = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
+  assert.deepEqual(menuScan.violations.map(({ id }) => id), [], "Open navigation and language options must remain accessible");
+  await page.keyboard.press("Tab");
+  await expect(panel.getByRole("button", { name: "English", exact: true })).toBeFocused();
   await page.keyboard.press("Escape");
   assert.equal(await language.getAttribute("aria-expanded"), "false", "Escape closes the nested language list");
   assert.equal(await menu.getAttribute("aria-expanded"), "true", "Escape must not also close its parent menu");
-  const menuScan = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
-  assert.deepEqual(menuScan.violations.map(({ id }) => id), [], "Open navigation must remain accessible");
+  await expect(language).toBeFocused();
   await page.keyboard.press("Escape");
   assert.equal(await menu.getAttribute("aria-expanded"), "false", "Escape closes the parent menu");
   assert.equal(await menu.evaluate((element) => document.activeElement === element), true, "Focus returns to the trigger");
@@ -124,9 +230,11 @@ try {
   await page.reload({ waitUntil: "networkidle" });
   assert.equal(await page.locator("html").getAttribute("lang"), "ar", "Locale persists after reload");
   await menu.click();
-  await panel.locator('a[href="#features"]').click();
-  assert.equal(await menu.getAttribute("aria-expanded"), "false", "Navigation closes the menu");
-  assert.equal(await page.evaluate(() => document.activeElement?.id), "features", "Navigation focuses the destination");
+  await panel.locator('button[aria-controls]').click();
+  // Dismissing the inline list must not move the link before the click lands.
+  await panel.locator('a[href="#contact-form"]').click({ delay: 80 });
+  await expect(menu).toHaveAttribute("aria-expanded", "false");
+  assert.equal(await page.evaluate(() => document.activeElement?.id), "contact-form", "Navigation focuses the destination");
   await context.close();
 
   const themeContext = await contextFor("en", "system", 1280);
@@ -151,7 +259,44 @@ try {
   await details.nth(1).locator("summary").click();
   assert.equal(await details.nth(0).evaluate((el) => el.open), false, "Opening a question closes the first");
   assert.equal(await details.nth(1).evaluate((el) => el.open), true);
+  const desktopPicker = header.getByRole("button", { name: "Language: English" });
+  await desktopPicker.click();
+  await assertLanguageList(desktopPicker, "en", "desktop header");
+  await themePage.keyboard.press("Escape");
+  await expect(desktopPicker).toHaveAttribute("aria-expanded", "false");
+  await expect(desktopPicker).toBeFocused();
   await themeContext.close();
+
+  const freshContext = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: "reduce", colorScheme: "dark" });
+  const freshPage = await freshContext.newPage();
+  await freshPage.goto(baseUrl, { waitUntil: "networkidle" });
+  assert.equal(await freshPage.locator("html").getAttribute("lang"), "ar", "Arabic is the default locale");
+  assert.equal(await freshPage.evaluate(() => document.documentElement.classList.contains("dark")), false, "The new visual style defaults to light");
+  const hero = freshPage.locator("#hero");
+  await hero.locator('a[href="#features"]').click();
+  assert.equal(new URL(freshPage.url()).hash, "#features");
+  await hero.locator('a[href="#contact-form"]').click();
+  assert.equal(new URL(freshPage.url()).hash, "#contact-form");
+  assert.equal(await freshPage.locator("#contact-form form").isVisible(), true, "The demo CTA leads to the real contact form");
+  const freshFooter = freshPage.locator("footer");
+  await freshFooter.getByRole("button", { name: "اللغة: العربية" }).click();
+  await freshFooter.getByRole("button", { name: "English" }).click();
+  await hero.getByRole("link", { name: "Request a demo" }).waitFor({ state: "visible" });
+  for (const [name, href] of [
+    ["Facebook", "https://www.facebook.com/share/1CxjnGsWPZ/?mibextid=wwXIfr"],
+    ["Instagram", "https://www.instagram.com/h2d.dev?dmpr=MTB2MmN3bXEwOHA5NQ%3D%3D&utm_source=qr"],
+    ["WhatsApp", "https://wa.me/message/QVOQMCZGFPIQF1"],
+  ]) {
+    const icon = freshFooter.getByRole("link", { name, exact: true });
+    assert.equal(await icon.getAttribute("href"), href, `${name} points to the supplied profile`);
+    assert.equal(await icon.locator("svg use").count(), 1, `${name} has a footer icon`);
+  }
+  const footerPicker = freshFooter.getByRole("button", { name: "Language: English" });
+  await footerPicker.click();
+  await freshFooter.locator('a[href="#how"]').click({ delay: 80 });
+  assert.equal(new URL(freshPage.url()).hash, "#how", "Outside click still activates the footer link");
+  await expect(footerPicker).toHaveAttribute("aria-expanded", "false");
+  await freshContext.close();
 
   // With the main bundle held back, locale and theme must already be correct,
   // and hydration must retain the actual pre-rendered heading node.
@@ -186,9 +331,14 @@ try {
   assert.match(await noJsPage.locator("main").innerText(), /نسخة مخصصة من EduFormation/);
   assert.equal(await noJsPage.locator("main section").count(), 11, "The static build should remain readable without JavaScript");
   assert.equal(await noJsPage.locator(".js-only:visible").count(), 0, "Inert JavaScript controls are hidden without JavaScript");
+  const contactLink = noJsPage.locator('#contact-form a[href="#footer-contact"]');
+  assert.equal(await contactLink.isVisible(), true, "The demo section still offers contact options without JavaScript");
+  await contactLink.click();
+  assert.equal(new URL(noJsPage.url()).hash, "#footer-contact");
+  assert.equal(await noJsPage.locator('#footer-contact a[href^="https:"]:visible').count(), 3);
   await noJsContext.close();
   assert.deepEqual(errors, [], "No runtime or hydration errors");
-  console.log("Browser checks passed: 30 viewport/locale/theme combinations, six axe scans, keyboard, locale, fonts, theme, FAQ and no-JS content.");
+  console.log("Browser checks passed: 36 viewport/locale/theme combinations, open language lists on touch and desktop, axe, keyboard, theme, FAQ, hero links and footer contacts.");
 } finally {
   await browser.close();
 }
