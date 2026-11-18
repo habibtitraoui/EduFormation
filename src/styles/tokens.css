@@ -59,8 +59,7 @@
     U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
 }
 
-/* Warm canvas, neutral type and orange accents. Use the saturated tones for
-   decoration and fills; --accent is tuned for readable text and focus rings. */
+/* EduFormation's electric blue on cool neutral surfaces. */
 :root {
   --font-inter: "InterVariable";
   --font-geist-mono: "GeistMonoVariable";
@@ -68,41 +67,38 @@
   /* The Arabic endonym uses a local fallback until Arabic is selected. */
   --font-arabic: "InterFallback";
 
-  --canvas: #faf9f7;
+  --canvas: #f7f8fa;
   --panel: #ffffff;
-  --inset: #f7f2ed;
-  --line: #eae3dc;
-  --line-strong: #99897d;
+  --inset: #f1f3f6;
+  --line: #e3e6eb;
+  --line-strong: #818da0;
 
-  --fg: #191714;
-  --muted: #645c55;
-  --subtle: #766e66;
+  --fg: #0d1117;
+  --muted: #5b6572;
+  --subtle: #687488;
 
-  --accent: #ac420c;
-  --accent-display: #d34d0b;
-  --accent-soft: #fff0e3;
-  --accent-line: #edc3a6;
-  --accent-ring: rgb(172 66 12 / 0.2);
-  --warm-glow: rgb(249 136 55 / 0.17);
+  --accent: #2563eb;
+  --accent-soft: #eff6ff;
+  --accent-line: #bfd4fa;
+  --accent-glow: rgb(37 99 235 / 0.12);
 
-  /* Orange fills use dark text to keep small button labels readable. */
-  --ink: #f58832;
-  --ink-hover: #ff9c4e;
-  --ink-fg: #241306;
+  --ink: #2563eb;
+  --ink-hover: #1d4ed8;
+  --ink-fg: #ffffff;
   --accent-fg: var(--ink-fg);
-  --accent-gloss: linear-gradient(155deg, #ffb66c, #ff8b34 58%, #f57921);
-  --shadow-accent: 0 10px 24px -10px rgb(206 82 15 / 0.48);
-  --shadow-feature: 0 18px 38px -18px rgb(58 39 23 / 0.22);
+  --accent-gloss: linear-gradient(155deg, #2b6bea, #2563eb 58%, #1d4ed8);
+  --shadow-accent: 0 10px 24px -10px rgb(37 99 235 / 0.45);
+  --shadow-feature: 0 18px 38px -18px rgb(15 36 76 / 0.22);
 
   /* Video chrome and printed paper retain their own colours in both themes. */
-  --media: #211b18;
-  --media-chrome: #2d2521;
+  --media: #0d1117;
+  --media-chrome: #11161d;
   --media-fg: #ffffff;
-  --paper: #fffdf8;
-  --paper-fg: #221815;
-  --paper-muted: #675b53;
-  --paper-subtle: #766a5f;
-  --paper-line: #ded2c0;
+  --paper: #ffffff;
+  --paper-fg: #0d1117;
+  --paper-muted: #5b6572;
+  --paper-subtle: #687488;
+  --paper-line: #d9e2f0;
 
   --success: #176343;
   --success-soft: #e8f5ed;
@@ -120,22 +116,20 @@ html[lang="ar"] {
 }
 
 .dark {
-  --canvas: #171412;
-  --panel: #211c19;
-  --inset: #28211d;
-  --line: #3a302a;
-  --line-strong: #8e7768;
+  --canvas: #0b0f14;
+  --panel: #1a1f26;
+  --inset: #131820;
+  --line: #273140;
+  --line-strong: #697a93;
 
-  --fg: #fbf4ee;
-  --muted: #c3b5a9;
-  --subtle: #ab9b90;
+  --fg: #e5e7eb;
+  --muted: #94a3b8;
+  --subtle: #8290a5;
 
-  --accent: #ffb37c;
-  --accent-display: #ffa057;
-  --accent-soft: #39281f;
-  --accent-line: #775039;
-  --accent-ring: rgb(255 160 87 / 0.25);
-  --warm-glow: rgb(255 134 50 / 0.15);
+  --accent: #60a5fa;
+  --accent-soft: #17263f;
+  --accent-line: #34558a;
+  --accent-glow: rgb(59 130 246 / 0.17);
   --shadow-accent: 0 10px 24px -10px rgb(0 0 0 / 0.62);
   --shadow-feature: 0 18px 38px -18px rgb(0 0 0 / 0.8);
 
@@ -242,7 +236,7 @@ html[lang="ar"] {
   --radius-card: 14px;
   --radius-overlay: 22px;
 
-  --shadow-card: 0 12px 32px -15px var(--warm-glow);
+  --shadow-card: 0 12px 32px -15px var(--accent-glow);
   --shadow-overlay: var(--shadow-feature);
 }
 

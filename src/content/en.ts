@@ -236,7 +236,7 @@ export const en = {
   finalCta: {
     title: "Request a demo of your platform",
     body: "Tell us about your academy or company. We’ll show you how EduFormation can be customized for your brand, learners, and training goals.",
-    primary: "Request a demo",
+    otherContact: "Other ways to reach us",
   },
 
   footer: {
@@ -245,6 +245,11 @@ export const en = {
     courses: "Courses",
     resources: "Resources",
     contact: "Contact",
+    social: {
+      facebook: "Facebook",
+      instagram: "Instagram",
+      whatsapp: "WhatsApp",
+    },
     designSystem: "Design system",
     security: "Security notes",
     legal: "© {year} EduFormation. All rights reserved.",
@@ -262,8 +267,8 @@ export const en = {
     submit: "Send demo request",
     submitting: "Sending…",
     success: "Thanks — we’ll reply to {email} about your demo request.",
-    mailtoOpened: "Your email app should open with the message addressed to {email}. Send it there to complete your inquiry.",
-    error: "That did not send. Try again, or email {email}.",
+    mailtoOpened: "Your email app should open with a prefilled draft. Send the message from your email app to complete the request.",
+    error: "That did not send. Please try again.",
     errorName: "Enter the name we should address the reply to.",
     errorEmail: "Enter a valid email address, for example name@example.com.",
     errorMessage: "Tell us a little about your organization or training needs.",

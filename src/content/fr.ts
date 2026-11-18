@@ -233,7 +233,7 @@ export const fr = {
   finalCta: {
     title: "Demandez une démonstration de votre plateforme",
     body: "Présentez votre académie ou votre entreprise. Nous vous montrerons comment adapter EduFormation à votre marque, à vos apprenants et à vos objectifs.",
-    primary: "Demander une démonstration",
+    otherContact: "Autres moyens de nous contacter",
   },
 
   footer: {
@@ -242,6 +242,11 @@ export const fr = {
     courses: "Cours",
     resources: "Ressources",
     contact: "Contact",
+    social: {
+      facebook: "Facebook",
+      instagram: "Instagram",
+      whatsapp: "WhatsApp",
+    },
     designSystem: "Système de design",
     security: "Notes de sécurité",
     legal: "© {year} EduFormation. Tous droits réservés.",
@@ -259,8 +264,8 @@ export const fr = {
     submit: "Envoyer la demande de démonstration",
     submitting: "Envoi en cours…",
     success: "Merci — nous répondrons à {email} au sujet de votre demande de démonstration.",
-    mailtoOpened: "Votre application de messagerie devrait s’ouvrir avec le message adressé à {email}. Envoyez-le pour terminer votre demande.",
-    error: "L'envoi a échoué. Réessayez, ou écrivez à {email}.",
+    mailtoOpened: "Votre application de messagerie devrait s’ouvrir avec un brouillon prérempli. Envoyez le message depuis votre application pour terminer la demande.",
+    error: "L’envoi a échoué. Veuillez réessayer.",
     errorName: "Indiquez le nom auquel adresser la réponse.",
     errorEmail: "Indiquez une adresse e-mail valide, par exemple nom@exemple.fr.",
     errorMessage: "Parlez-nous brièvement de votre organisation ou de vos besoins en formation.",

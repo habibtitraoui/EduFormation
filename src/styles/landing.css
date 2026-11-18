@@ -58,7 +58,7 @@
 .hero-accent {
   position: relative;
   display: block;
-  color: var(--accent-display);
+  color: var(--accent);
 }
 
 .hero-underline {
@@ -90,7 +90,7 @@
   border: 1px solid var(--accent-line);
   border-radius: var(--radius-card);
   background: var(--panel);
-  color: var(--accent-display);
+  color: var(--accent);
   box-shadow: var(--shadow-feature);
 }
 
@@ -208,7 +208,7 @@
   padding: clamp(0.875rem, 3.4vw, 2.75rem);
   border: 1px solid var(--accent-line);
   border-radius: var(--radius-overlay);
-  background: radial-gradient(ellipse at 55% 12%, var(--warm-glow), transparent 72%), var(--inset);
+  background: radial-gradient(ellipse at 55% 12%, var(--accent-glow), transparent 72%), var(--inset);
 }
 
 @media (min-width: 64rem) {
@@ -258,7 +258,7 @@
   overflow: hidden;
   background:
     radial-gradient(circle, var(--accent-line) 1px, transparent 1.5px) center / 22px 22px,
-    radial-gradient(ellipse at center, var(--warm-glow), transparent 75%),
+    radial-gradient(ellipse at center, var(--accent-glow), transparent 75%),
     var(--inset);
 }
 
@@ -313,7 +313,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: radial-gradient(ellipse at 100% 90%, var(--warm-glow), transparent 76%), var(--accent-soft);
+  background: radial-gradient(ellipse at 100% 90%, var(--accent-glow), transparent 76%), var(--accent-soft);
 }
 
 .contact-panel::before {
@@ -325,7 +325,7 @@
   block-size: 21rem;
   border: 1px solid var(--accent-line);
   border-radius: 50%;
-  box-shadow: 0 0 0 2.5rem var(--warm-glow), 0 0 0 5rem var(--warm-glow);
+  box-shadow: 0 0 0 2.5rem var(--accent-glow), 0 0 0 5rem var(--accent-glow);
   content: "";
 }
 

@@ -168,6 +168,15 @@ try {
   await freshFooter.getByRole("button", { name: "اللغة: العربية" }).click();
   await freshFooter.getByRole("button", { name: "English" }).click();
   await hero.getByRole("link", { name: "Request a demo" }).waitFor({ state: "visible" });
+  for (const [name, href] of [
+    ["Facebook", "https://www.facebook.com/share/1CxjnGsWPZ/?mibextid=wwXIfr"],
+    ["Instagram", "https://www.instagram.com/h2d.dev?dmpr=MTB2MmN3bXEwOHA5NQ%3D%3D&utm_source=qr"],
+    ["WhatsApp", "https://wa.me/message/QVOQMCZGFPIQF1"],
+  ]) {
+    const icon = freshFooter.getByRole("link", { name, exact: true });
+    assert.equal(await icon.getAttribute("href"), href, `${name} points to the supplied profile`);
+    assert.equal(await icon.locator("svg use").count(), 1, `${name} has a footer icon`);
+  }
   await freshContext.close();
 
   // With the main bundle held back, locale and theme must already be correct,
@@ -203,10 +212,14 @@ try {
   assert.match(await noJsPage.locator("main").innerText(), /نسخة مخصصة من EduFormation/);
   assert.equal(await noJsPage.locator("main section").count(), 11, "The static build should remain readable without JavaScript");
   assert.equal(await noJsPage.locator(".js-only:visible").count(), 0, "Inert JavaScript controls are hidden without JavaScript");
-  assert.equal(await noJsPage.locator('#contact-form a[href^="mailto:"]').isVisible(), true, "The demo anchor still offers a real contact link without JavaScript");
+  const contactLink = noJsPage.locator('#contact-form a[href="#footer-contact"]');
+  assert.equal(await contactLink.isVisible(), true, "The demo section still offers contact options without JavaScript");
+  await contactLink.click();
+  assert.equal(new URL(noJsPage.url()).hash, "#footer-contact");
+  assert.equal(await noJsPage.locator('#footer-contact a[href^="https:"]:visible').count(), 3);
   await noJsContext.close();
   assert.deepEqual(errors, [], "No runtime or hydration errors");
-  console.log("Browser checks passed: 36 viewport/locale/theme combinations, six axe scans, keyboard, locale, theme, FAQ, hero links and no-JS contact.");
+  console.log("Browser checks passed: 36 viewport/locale/theme combinations, six axe scans, keyboard, locale, theme, FAQ, hero links and footer contacts.");
 } finally {
   await browser.close();
 }

@@ -21,7 +21,13 @@ describe("static rendering", () => {
     expect(positions).toEqual([...positions].sort((a, b) => a - b));
     expect(html).toContain("H2D.dev");
     expect(html).toContain('href="#contact-form"');
-    expect(html).toContain(`href="mailto:${contact.email}"`);
+  });
+
+  it("links to footer contacts without rendering the owner's email", () => {
+    expect(html).toContain('href="#footer-contact"');
+    expect(html).toContain('id="footer-contact"');
+    expect(html).not.toContain('href="mailto:');
+    expect(html).not.toContain(contact.email);
   });
 
   it("renders formatted certificate specifications rather than template placeholders", () => {

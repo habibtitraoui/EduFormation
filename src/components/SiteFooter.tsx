@@ -1,10 +1,9 @@
 import { useId, useSyncExternalStore } from "react";
 
-import { contact } from "../lib/config";
-import { cn } from "../lib/cn";
 import { fillTemplate, formatYear } from "../lib/format";
 import { useLocale } from "../lib/locale";
 
+import { FooterSocialLinks } from "./FooterSocialLinks";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
 import { Wordmark } from "./Wordmark";
@@ -93,22 +92,14 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <nav aria-labelledby={`${ids}-contact`}>
+          <nav id="footer-contact" tabIndex={-1} aria-labelledby={`${ids}-contact`} className="scroll-mt-20">
             <p id={`${ids}-contact`} className="text-label text-fg">
               {t.footer.contact}
             </p>
-            <ul className="mt-3 flex flex-col gap-2">
-              <li>
-                <a href={`mailto:${contact.email}`} dir="ltr" className={cn(linkClass, "wrap-anywhere text-label")}>
-                  {contact.email}
-                </a>
-              </li>
-              <li>
-                <a href="#contact-form" className={linkClass}>
-                  {t.nav.contact}
-                </a>
-              </li>
-            </ul>
+            <a href="#contact-form" className={`mt-3 inline-block ${linkClass}`}>
+              {t.hero.ctaPrimary}
+            </a>
+            <FooterSocialLinks />
           </nav>
         </div>
 

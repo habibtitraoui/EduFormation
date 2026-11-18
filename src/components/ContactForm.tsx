@@ -76,9 +76,8 @@ export function ContactForm() {
     }
   }
 
-  const errorMessage = fillTemplate(t.form.error, { email: contact.email });
   const successMessage = contact.endpoint === null
-    ? fillTemplate(t.form.mailtoOpened, { email: contact.email })
+    ? t.form.mailtoOpened
     : fillTemplate(t.form.success, { email: sentTo });
 
   return (
@@ -107,7 +106,12 @@ export function ContactForm() {
                 aria-describedby={errors.message ? fieldErrorId(`${id}-message`) : undefined} />
             </Field>
           </div>
-          {submission === "error" ? <Alert tone="danger" className="mt-4">{errorMessage}</Alert> : null}
+          {submission === "error" ? (
+            <Alert tone="danger" className="mt-4">
+              {t.form.error}{" "}
+              <a href="#footer-contact" className="rounded-control underline underline-offset-2">{t.finalCta.otherContact}</a>
+            </Alert>
+          ) : null}
           <Button type="submit" size="lg" disabled={submitting} className="relative mt-5 min-w-40">
             <span aria-hidden="true" className="invisible">{t.form.submit}</span>
             <span className="absolute flex items-center gap-2">

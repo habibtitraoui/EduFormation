@@ -25,12 +25,12 @@ All variables are read at **build time**. `.env.example` contains examples, not 
 | Variable | Purpose |
 | --- | --- |
 | `VITE_SITE_URL` | Canonical origin of this site, without a path. Required for production; used for canonical, Open Graph, JSON-LD, robots and sitemap URLs. |
-| `VITE_CONTACT_EMAIL` | Contact address used by the form's email fallback and direct email links. Defaults to `titraoui.habibe@gmail.com`. |
+| `VITE_CONTACT_EMAIL` | Optional override for the email-app fallback recipient. This is a public build-time value, not a secret. |
 | `VITE_CONTACT_ENDPOINT` | Optional URL accepting a JSON `POST` containing `name`, `email`, and `message`. When set, the contact form submits there; configure CORS if the endpoint is on another origin. |
 
-Without a contact endpoint, the form validates the visitor's details and opens a prefilled message in their email app. The visitor must send the message from that app; the website does not claim delivery. When an endpoint is configured, failures are reported as failures and the endpoint is responsible for delivering the inquiry. No Instagram profile was provided, so the page does not link to an unverified account.
+Without a contact endpoint, the form validates the visitor's details and opens a prefilled message in their email app. The visitor must send the message from that app; the website does not claim delivery. The owner's address is not displayed on the landing page, but the email-app fallback still includes it as the recipient and is not a privacy boundary. When an endpoint is configured, failures are reported as failures and the endpoint is responsible for delivering the inquiry. The footer links to the supplied Facebook, Instagram, and WhatsApp profiles.
 
-Arabic is the default language and the page sets `lang="ar"` and `dir="rtl"` before paint. English and French remain available through the language switcher. The switcher persists the choice; the warm, orange-accented light theme is the default. A saved dark theme or system preference is applied in the document head before paint. Both choices are stored locally and are not sent to a server.
+Arabic is the default language and the page sets `lang="ar"` and `dir="rtl"` before paint. English and French remain available through the language switcher. The switcher persists the choice; the blue-accented light theme is the default. A saved dark theme or system preference is applied in the document head before paint. Both choices are stored locally and are not sent to a server.
 
 ## Static output and deployment
 

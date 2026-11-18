@@ -70,7 +70,8 @@ try {
   await error.waitFor();
   const errorText = await error.innerText();
   assert.match(errorText, /That did not send/);
-  assert.match(errorText, /contact@training\.example/);
+  assert(!errorText.includes(process.env.VITE_CONTACT_EMAIL || "contact@training.example"), "Failure must not expose the owner's address");
+  assert.equal(await error.getByRole("link", { name: "Other ways to reach us" }).getAttribute("href"), "#footer-contact");
   assert.deepEqual(body, {
     name: "Jane",
     email: "jane@example.org",
