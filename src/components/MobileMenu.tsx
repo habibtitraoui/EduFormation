@@ -57,8 +57,8 @@ export function MobileMenu({ className }: { className?: string | undefined }) {
         <div
           id={panelId}
           className={cn(
-            "absolute top-full end-0 z-50 mt-2 max-h-[calc(100dvh-92px)] w-72 max-w-[calc(100vw-40px)] overflow-y-auto rounded-overlay border border-line",
-            "bg-panel p-3 shadow-overlay",
+            "absolute top-full end-0 z-50 mt-5 max-h-[calc(100dvh-5.75rem)] w-72 max-w-[calc(100dvw-2.5rem)]",
+            "overflow-y-auto overscroll-contain rounded-overlay border border-line bg-panel p-3 shadow-overlay",
           )}
         >
           <nav aria-label={t.nav.sectionLabel}>
@@ -77,8 +77,8 @@ export function MobileMenu({ className }: { className?: string | undefined }) {
             </ul>
           </nav>
 
-          <div className="mt-3 flex items-center gap-2 border-t border-line pt-3">
-            <LocaleSwitcher />
+          <div className="mt-3 flex items-start gap-2 border-t border-line pt-3">
+            <LocaleSwitcher placement="mobile-menu" className="flex-1" />
             <ThemeToggle />
           </div>
 

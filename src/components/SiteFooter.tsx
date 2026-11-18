@@ -56,8 +56,8 @@ export function SiteFooter() {
           <div className="flex flex-col gap-4">
             <a href="#hero" className="w-fit rounded-control"><Wordmark /></a>
             <p className="max-w-prose text-body-sm text-muted">{t.footer.tagline}</p>
-            <div className="flex items-center gap-2">
-              <LocaleSwitcher />
+            <div className="flex flex-wrap items-start gap-2">
+              <LocaleSwitcher placement="footer" className="max-w-40 flex-1 basis-32" />
               <ThemeToggle />
             </div>
           </div>
